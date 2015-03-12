@@ -146,7 +146,7 @@
     </build>
     <profiles>
         <profile>
-            <id>GeoEscolar</id>
+            <id>openshift</id>
             <build>
                 <finalName>GeoEscolar</finalName>
                 <plugins>
