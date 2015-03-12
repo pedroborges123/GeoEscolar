@@ -5,7 +5,7 @@
  */
 package br.es.geo.controler.util;
 
-import br.es.geo.mail.Email;
+import br.es.geo.controler.util.Email;
 import br.es.geo.modelo.Adm;
 import br.es.geo.modelo.Crianca;
 import br.es.geo.modelo.Motorista;
