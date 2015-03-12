@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml" >
+        <ui:define name="body"  > 
+            <f:event type="preRenderComponent" listener="#{userController.controleAcessoAdm()}" />
+            <div class="conteudo" onload="#{userController.controleAcessoAdm()}">
+
+                <h:form styleClass="jsfcrud_list_form">
+                    <p:growl id="msg" showDetail="true" autoUpdate="true" />
+                    <p:commandButton id="dynaButton" value="Abrir Menu" type="button"  icon="ui-icon-extlink" />
+                    <p:tieredMenu overlay="true" trigger="dynaButton" my="left top" at="left bottom" style="width:200px">
+                        <p:menuitem value="Adicionar Novo ADM" icon="ui-icon-disk" actionListener="#{admController.prepareCreate()}" />
+                        <p:menuitem value="Visualizar Todos ADM" actionListener="#" />
+                    </p:tieredMenu>
+                    <br/><br/><br/>
+
+                    <h:outputText escape="false" value="Lista Vazia" rendered="#{faleConoscoController.items.rowCount == 0}"/>
+
+                    <h:panelGroup rendered="#{faleConoscoController.items.rowCount > 0}">
+
+                        <p:dataTable id="table" value="#{faleConoscoController.items}" var="item" rowStyleClass="#{item.userResponse eq null ? 'naorespondida' : 'respondida'}"> 
+                            <f:facet name="header">
+                                <h:outputText value="Mensagens Recebidas"/>  <br/>
+                                <p:commandButton value="Atualizar Lista" update="msg" ajax="false"  />
+                            </f:facet>
+
+                            <f:facet name="footer">
+                                <h:outputText value="Total: #{faleConoscoController.items.rowCount} "/>
+
+                            </f:facet>
+
+                            <p:column headerText="Nome" >
+                                <f:facet name="header" >
+                                    <h:outputText value="Nome"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nome}"/>
+                            </p:column>
+                            <p:column headerText="Email" >
+                                <f:facet name="header">
+                                    <h:outputText value="Email"/>
+                                </f:facet>
+                                <h:outputText value="#{item.email}"/>
+                            </p:column>
+                            <p:column headerText="Assunto" >
+                                <f:facet name="header">
+                                    <h:outputText value="Assunto"/>
+                                </f:facet>
+                                <h:outputText value="#{item.assunto}"/>
+                            </p:column>
+
+
+                            <p:column headerText="Adm" >
+                                <f:facet name="header">
+                                    <h:outputText value="Adm"/>
+                                </f:facet>
+                                <h:outputText value="#{item.userResponse.nome}"/>
+                            </p:column>
+
+                            <p:column headerText="Editar" >
+                                <f:facet name="header">
+                                    <h:outputText value="Editar"/>
+                                </f:facet>
+
+                                <h:commandLink action="#{faleConoscoController.prepareEdit}" value="Responder"/>
+
+
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+
+                </h:form>
+
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

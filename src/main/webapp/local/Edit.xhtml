@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditLocalTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditLocalLabel_descricao}" for="descricao" />
+                    <h:inputText id="descricao" value="#{localController.selected.descricao}" title="#{bundle.EditLocalTitle_descricao}" />
+                    <h:outputLabel value="#{bundle.EditLocalLabel_tipoLocal}" for="tipoLocal" />
+                    <h:inputText id="tipoLocal" value="#{localController.selected.tipoLocal}" title="#{bundle.EditLocalTitle_tipoLocal}" />
+                    <h:outputLabel value="#{bundle.EditLocalLabel_horaChegada}" for="horaChegada" />
+                    <h:inputText id="horaChegada" value="#{localController.selected.horaChegada}" title="#{bundle.EditLocalTitle_horaChegada}" />
+                    <h:outputLabel value="#{bundle.EditLocalLabel_horaSaida}" for="horaSaida" />
+                    <h:inputText id="horaSaida" value="#{localController.selected.horaSaida}" title="#{bundle.EditLocalTitle_horaSaida}" />
+                    <h:outputLabel value="#{bundle.EditLocalLabel_diasUtilizacao}" for="diasUtilizacao" />
+                    <h:inputText id="diasUtilizacao" value="#{localController.selected.diasUtilizacao}" title="#{bundle.EditLocalTitle_diasUtilizacao}" />
+                    <h:outputLabel value="#{bundle.EditLocalLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{localController.selected.id}" title="#{bundle.EditLocalTitle_id}" />
+                </h:panelGrid>
+                <h:commandLink action="#{localController.update}" value="#{bundle.EditLocalSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditLocalViewLink}"/>
+                <br />
+                <h:commandLink action="#{localController.prepareList}" value="#{bundle.EditLocalShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditLocalIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

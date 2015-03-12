@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/motorista/motoristaTemplate.xhtml">
+        <ui:define name="body" rendered="#{userController.motoristaLogado()}"> 
+
+            <div class="conteudo"  >
+
+
+                <h:form id="forms">
+                    <p:growl id="msg" autoUpdate="true" showDetail="true" />
+
+                    <p:contextMenu for="TabelaEditavel" widgetVar="cMenu">   
+                        <p:menuitem value="Edit Cell" icon="ui-icon-search" onclick="PF('it').showCellEditor();return false;"/>  
+                        <p:menuitem value="Hide Menu" icon="ui-icon-close" onclick="PF('cMenu').hide()"/>  
+                    </p:contextMenu>
+                    <p:dataTable id="TabelaEditavel" var="item" value="#{itinerarioController.itinerarioByMotorista}"  editable="true" editMode="cell" widgetVar="it">
+                        <f:facet name="header">
+                            <h:outputText value="Lista de Itinerarios"/>  <br/>
+                        </f:facet>
+                        <f:facet name="footer">
+                            <h:outputText value="Total: #{itinerarioController.itinerarioByMotorista.rowCount} "/>
+
+                        </f:facet>
+
+                        <p:ajax event="cellEdit" listener="#{itinerarioController.onCellEdit}" update=":forms:msg" />
+
+                        <p:column headerText="Turno">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.turno}" /></f:facet>
+                                <f:facet name="input"><p:inputText id="modelInput" value="#{item.turno}" style="width:96%"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Inicia">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.horaInicio}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.horaInicio}" style="width:96%" label="horaInicio"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                        <p:column headerText="Previsao de Termino">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{item.horaFim}" /></f:facet>
+                                <f:facet name="input"><p:inputText value="#{item.horaFim}" style="width:96%" label="horaFim"/></f:facet>
+                            </p:cellEditor>
+                        </p:column>
+
+                    </p:dataTable>
+
+                    <br/> <br/>
+                    
+                    <p:panelGrid columns="2" rendered="#{itinerarioController.quantidadeItinerarioMaior3}" >
+                        
+                        <f:facet name="header" >
+                            <h1>Cadastrar Itinerario</h1>
+                        </f:facet>
+                        
+                        <h:outputLabel value="Turno" />
+                        <p:selectOneMenu id="turno" value="#{itinerarioController.selected.turno}"   >
+                            <f:selectItem itemLabel="----" itemValue="" />
+                            <f:selectItem itemLabel="Matutino" itemValue="Matutino" />
+                            <f:selectItem itemLabel="Vespertino" itemValue="Vespertino" />
+                            <f:selectItem itemLabel="Noturno" itemValue="Noturno" />
+                         
+                        </p:selectOneMenu>
+                        
+                        <h:outputLabel value="Horario de Inicio: " />
+                        <p:inputMask  mask="*9:99" value="#{itinerarioController.selected.horaInicio}" required="true" />
+                        
+                         <h:outputLabel value="Horario de Termino: " />
+                         <p:inputMask mask="*9:99" value="#{itinerarioController.selected.horaFim}" required="true" />
+                        
+                         <h:outputLabel value="" />
+                         <p:commandButton value="Salvar" actionListener="#{itinerarioController.create()}" />
+                    </p:panelGrid> 
+                   
+                </h:form>
+
+
+            </div>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+
+
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewItinerarioTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewItinerarioLabel_turno}"/>
+                    <h:outputText value="#{itinerarioController.selected.turno}" title="#{bundle.ViewItinerarioTitle_turno}"/>
+                    <h:outputText value="#{bundle.ViewItinerarioLabel_horaInicio}"/>
+                    <h:outputText value="#{itinerarioController.selected.horaInicio}" title="#{bundle.ViewItinerarioTitle_horaInicio}"/>
+                    <h:outputText value="#{bundle.ViewItinerarioLabel_horaFim}"/>
+                    <h:outputText value="#{itinerarioController.selected.horaFim}" title="#{bundle.ViewItinerarioTitle_horaFim}"/>
+                    <h:outputText value="#{bundle.ViewItinerarioLabel_id}"/>
+                    <h:outputText value="#{itinerarioController.selected.id}" title="#{bundle.ViewItinerarioTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{itinerarioController.destroyAndView}" value="#{bundle.ViewItinerarioDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewItinerarioEditLink}"/>
+                <br />
+                <h:commandLink action="#{itinerarioController.prepareCreate}" value="#{bundle.ViewItinerarioCreateLink}" />
+                <br />
+                <h:commandLink action="#{itinerarioController.prepareList}" value="#{bundle.ViewItinerarioShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewItinerarioIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

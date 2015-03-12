@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+
+
+    <ui:composition template="/responsavel/responsavelTemplate.xhtml">
+
+
+
+        <ui:define name="body"> 
+
+            <script type="text/javascript" src="https%3A%2F%2Fmaps.googleapis.com%2Fmaps%2Fapi%2Fjs%3Fv%3D3.exp%26signed_in%3Dtrue"></script>
+
+            <script type="text/javascript">
+                var directionsDisplay;
+                var directionsService = new google.maps.DirectionsService();
+                var map;
+
+                var x = document.getElementById("demo");
+
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
+                    } else {
+                        x.innerHTML = "Geolocation is not supported by this browser.";
+                    }
+                }
+                
+                function showPosition(position) {
+                    x.innerHTML = "Latitude: " + position.coords.latitude +
+                            "</br>Longitude: " + position.coords.longitude;
+                }
+
+                function showError(error) {
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            x.innerHTML = "Usuario negou a requisicao Geolocalizacao.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            x.innerHTML = "Localizacao indisponivel.";
+                            break;
+                        case error.TIMEOUT:
+                            x.innerHTML = "O pedido para obter a localização do usuário expirou.";
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            x.innerHTML = "Ocorreu um error desconhecido.";
+                            break;
+                    }
+                }
+
+                function showError(error) {
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            x.innerHTML = "Usuario negou a requisicao Geolocalizacao.";
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            x.innerHTML = "Localizacao indisponivel.";
+                            break;
+                        case error.TIMEOUT:
+                            x.innerHTML = "O pedido para obter a localização do usuário expirou.";
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            x.innerHTML = "Ocorreu um error desconhecido.";
+                            break;
+                    }
+                }
+
+                function initialize() {
+                    directionsDisplay = new google.maps.DirectionsRenderer();
+                    var center = navigator.geolocation.getCurrentPosition(showPosition, showError);
+                    var mapOptions = {
+                        zoom: 6,
+                        center: center
+                    };
+                    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+                    directionsDisplay.setMap(map);
+                }
+
+                function calcRoute() {
+                    var start = document.getElementById('start').value;
+                    var end = document.getElementById('end').value;
+                    var waypts = [];
+                    var checkboxArray = document.getElementById('waypoints');
+                    //<![CDATA[ 
+                    for (var i = 0; i < checkboxArray.length; i++) {
+                        if (checkboxArray.options[i].selected == true) {
+                            waypts.push({
+                                location: checkboxArray[i].value,
+                                stopover: true});
+                        }
+                    }
+//]]>
+                    var request = {
+                        origin: start,
+                        destination: end,
+                        waypoints: waypts,
+                        optimizeWaypoints: true,
+                        travelMode: google.maps.TravelMode.DRIVING
+                    };
+                    directionsService.route(request, function(response, status) {
+                        if (status == google.maps.DirectionsStatus.OK) {
+                            directionsDisplay.setDirections(response);
+                            var route = response.routes[0];
+                            var summaryPanel = document.getElementById('directions_panel');
+                            summaryPanel.innerHTML = '';
+
+                        }
+                    });
+                }
+
+                google.maps.event.addDomListener(window, 'load', initialize);
+
+            </script>
+
+            
+            
+            <f:event listener="#{respController.inializa()}" type="preRenderComponent" />
+            <h:form>
+                <p:growl autoUpdate="true" id="msg" />
+                <div class="painelEsquerdo" >
+
+
+               </div>
+
+                <div class="painelDireito" >
+                    <p id="demo"></p>
+                    <div id="map-canvas" style=" float:left;width:70%;height:100%;" ></div>
+
+                </div>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>

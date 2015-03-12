@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Cadastro Motorista"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <div class="conteudo" > 
+
+
+                <h:form class="cadastro">
+                    <p:growl id="msg" showDetail="true" autoUpdate="true" /> 
+
+                    <h1>Cadastrar Motorista </h1>
+
+                    <p:panelGrid columns="2">
+
+                        <h:outputLabel value="Nome: *" for="nome" />
+                        <p:inputText id="nome" value="#{motoristaController.selected.nome}" title="Nome" required="true"/>
+
+                        <h:outputLabel value="Email: *" for="email" />
+                        <p:inputText id="email" value="#{motoristaController.selected.email}" required="true" label="Email" >
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                           
+                            
+                        </p:inputText>
+                           
+                        <h:outputLabel value="Telefone: *" for="telefone" />
+                        <p:inputMask id="telefone" value="#{motoristaController.selected.telefone}" title="Telefone" mask="(999) ?999**9999" required="true" />
+
+                        <h:outputLabel value="Carteira: *" for="carteiraMotorista" />
+                        <p:inputText id="carteiraMotorista" value="#{motoristaController.selected.carteiraMotorista}" title="Carteira de Motorista"  required="true"/>
+
+
+                        <h:outputLabel for="pwd1" value="Senha 1: *" />
+                        <p:password id="pwd1" value="#{motoristaController.selected.senha}" match="pwd2" label="Password 1" required="true"   feedback="true"
+                                    promptLabel="Por Favor entre com a senha" weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Forte"/>
+
+                        <h:outputLabel for="pwd2" value="Repetir Senha: *" />
+                        <p:password id="pwd2" value="#{motoristaController.selected.senha}" label="Password 2" required="true" />
+
+
+                    </p:panelGrid>
+                    <br /><br />
+                    <h1>Cadastrar Veiculo </h1>
+
+                    <p:panelGrid columns="2">
+
+                        <h:outputLabel value="Placa: *" for="placa"  />
+                        <p:inputMask id="placa" value="#{motoristaController.transporte.placa}" title="Placa do Veiculo"  mask="***-9999"/>
+
+                        <h:outputLabel value="Marca: *" for="marca" />
+                        <p:inputText id="marca" value="#{motoristaController.transporte.marca}" title="Marca do Veiculo" />
+
+                        <h:outputLabel value="Capacidade: *" for="capacidade" />
+                        <p:inputText id="capacidade" type="number" value="#{motoristaController.transporte.capacidade}" title="Capacidade de Assentos em Numero" />
+
+                        <h:outputLabel value="Registro: *" for="registro" />
+                        <p:inputText id="registro" value="#{motoristaController.transporte.registro}" title="Registro do Transporte Escolar" />
+
+
+                    </p:panelGrid>
+
+
+                    <br />
+
+                    <p:commandButton actionListener="#{motoristaController.create}" value="Cadastrar" update="msg" ajax="false"/>
+                    <br /><br /><br /><br />
+                    <h:link outcome="/index" value="Voltar" class="link"/>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateTransporteEscolarTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_placa}" for="placa" />
+                    <h:inputText id="placa" value="#{transporteEscolarController.selected.placa}" title="#{bundle.CreateTransporteEscolarTitle_placa}" />
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_marca}" for="marca" />
+                    <h:inputText id="marca" value="#{transporteEscolarController.selected.marca}" title="#{bundle.CreateTransporteEscolarTitle_marca}" />
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_capacidade}" for="capacidade" />
+                    <h:inputText id="capacidade" value="#{transporteEscolarController.selected.capacidade}" title="#{bundle.CreateTransporteEscolarTitle_capacidade}" />
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_registro}" for="registro" />
+                    <h:inputText id="registro" value="#{transporteEscolarController.selected.registro}" title="#{bundle.CreateTransporteEscolarTitle_registro}" />
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_motorista}" for="motorista" />
+                    <h:selectOneMenu id="motorista" value="#{transporteEscolarController.selected.motorista}" title="#{bundle.CreateTransporteEscolarTitle_motorista}" >
+                        <f:selectItems value="#{motoristaController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.CreateTransporteEscolarLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{transporteEscolarController.selected.id}" title="#{bundle.CreateTransporteEscolarTitle_id}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{transporteEscolarController.create}" value="#{bundle.CreateTransporteEscolarSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{transporteEscolarController.prepareList}" value="#{bundle.CreateTransporteEscolarShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateTransporteEscolarIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

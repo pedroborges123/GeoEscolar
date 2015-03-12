@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Fale Conosco"></h:outputText>
+        </ui:define>
+        <ui:define name="body"> 
+            <div class="conteudo">
+
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+
+
+                <h:form class="conosco"> 
+                    <p:growl id="msg" showDetail="true" autoUpdate="true"/>
+
+                    <p:panelGrid columns="2" >
+                        <f:facet name="header" >
+                            <h:outputLabel value="Fale Conosco"   />
+                        </f:facet>
+
+                        <h:outputLabel value="Nome: " for="nome" />
+                        <p:inputText id="nome" value="#{faleConoscoController.selected.nome}" title="nome"  required="true"/>
+
+                        <h:outputLabel value="Email: " for="email" />
+                        <p:inputText id="email" type="email" value="#{faleConoscoController.selected.email}" title="email" required="true" >
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>    
+
+                        <h:outputLabel value="Assunto: " for="assunto" />
+                        <p:inputText id="assunto" value="#{faleConoscoController.selected.assunto}" title="assunto" required="true" />
+
+                        <h:outputLabel value="Mensagem: " for="texto" />
+                        <p:inputTextarea cols="100" rows="7" id="texto"  value="#{faleConoscoController.selected.texto}" title="Mensagem" required="true" />
+
+
+                        <h:outputLabel value="  "  />
+                        <p:commandButton actionListener="#{faleConoscoController.create()}" ajax="false" update="msg" value="Enviar"/>
+
+
+                    </p:panelGrid>
+
+                    <br />
+
+
+                </h:form>
+
+
+
+            </div>
+        </ui:define>
+
+
+    </ui:composition>
+
+
+
+
+</html>

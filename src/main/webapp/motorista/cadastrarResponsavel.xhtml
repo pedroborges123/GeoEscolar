@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/motorista/motoristaTemplate.xhtml">
+        <ui:define name="body"> 
+
+            <div class="conteudo"  >
+                <f:event type="preRenderComponent" listener="#{respController.showTooltip()}" />
+
+                <h:form > 
+
+
+                    <p:dataTable var="resp" id="resp" value="#{respController.listAllresp}" widgetVar="tabela"
+                                 emptyMessage="Nenhum Responsavel foi encontrado" filteredValue="#{respController.listResp}">
+
+                        <f:facet name="header">
+                            <p:outputPanel >
+
+                                <h:outputText value="Pesquise em Todos campos:" />
+                                <p:inputText id="globalFilter" onkeyup="PF('tabela').filter()"  onblur="PF('tabela').filter()"  placeholder="Palavra Chave"/>
+
+                            </p:outputPanel>
+
+                        </f:facet>
+                        <f:facet name="footer">
+                            <p:outputPanel>
+                                <p:commandButton value="Resetar" update="resp" actionListener="#{respController.prepareCreateByMotorista()}" />
+                            </p:outputPanel>
+                        </f:facet>
+
+                        <p:column headerText="ID"  >
+                            <h:outputText value="#{resp.id}" />
+                        </p:column>
+
+                        <p:column filterBy="#{resp.nome}" headerText="Nome"  filterMatchMode="contains">
+                            <h:outputText value="#{resp.nome}" />
+                        </p:column>
+
+                        <p:column filterBy="#{resp.email}" headerText="Email"  filterMatchMode="contains">
+                            <h:outputText value="#{resp.email}" />
+                        </p:column>
+
+                        <p:column filterBy="#{resp.telefone}" headerText="Telefone"  filterMatchMode="contains">
+                            <h:outputText value="#{resp.telefone}" />
+                        </p:column>
+
+                        <p:column filterBy="#{resp.tipoRes}" headerText="Parentesco"  filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu  onchange="PF('tabela').filter()"  >
+                                    <f:selectItem  itemLabel="Selecione" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItem itemLabel="Pai" itemValue="#{respController.tipoPai}" />
+                                    <f:selectItem itemLabel="Mae" itemValue="#{respController.tipoMae}" />
+                                    <f:selectItem itemLabel="Tios" itemValue="#{respController.tipoTios}" />
+                                    <f:selectItem itemLabel="Avos" itemValue="#{respController.tipoAvos}" />
+                                    <f:selectItem itemLabel="Tutor" itemValue="#{respController.tipoTutor}" />
+                                    <f:selectItem itemLabel="Padastros" itemValue="#{respController.tipoPadastros}" />
+
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{resp.tipoRes}" />
+                        </p:column>
+
+                        <p:column  headerText="Adicionar"  >
+                            <p:commandButton  icon="ui-icon-plusthick"   update=":up"  actionListener="#{respController.prepareEditByMotorista()}" />
+                        </p:column>
+                    </p:dataTable>
+
+
+                </h:form>
+                <br/><br/><br/><br/>
+                
+                <h:form id="up" >
+                    <p:growl autoUpdate="true" id="msg" showDetail="true" />
+                   
+                   
+                    <p:panelGrid columns="2"   id="cadastrar"   >
+
+                        <f:facet name="header" >
+                             <h1> Cadastrar Responsavel </h1>
+                        </f:facet>
+                        
+                        <h:outputLabel value="Tipo: " for="tipoResR"  />
+                        <p:selectOneMenu id="tipoResR" value="#{respController.selected.tipoRes}"   >
+                            <f:selectItem itemLabel="----" itemValue="" />
+                            <f:selectItem itemLabel="Pai" itemValue="#{respController.tipoPai}" />
+                            <f:selectItem itemLabel="Mae" itemValue="#{respController.tipoMae}" />
+                            <f:selectItem itemLabel="Tios" itemValue="#{respController.tipoTios}" />
+                            <f:selectItem itemLabel="Avos" itemValue="#{respController.tipoAvos}" />
+                            <f:selectItem itemLabel="Tutor" itemValue="#{respController.tipoTutor}" />
+                            <f:selectItem itemLabel="Padastros" itemValue="#{respController.tipoPadastros}" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel value="Nome: *" for="nomeR" />
+                        <p:inputText id="nomeR" value="#{respController.selected.nome}"  />
+
+                        <h:outputLabel value="Email: *" for="emailR" />
+                        <p:inputText id="emailR" value="#{respController.selected.email}"  label="Email" >
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
+
+                        <h:outputLabel value="Telefone: *" for="telefoneR" />
+                        <p:inputMask id="telefoneR" value="#{respController.selected.telefone}"  mask="(999) ?999**9999" required="true" />
+
+                        <h:outputLabel value="Principal: *" for="principalR" />
+                        <p:selectBooleanCheckbox id="principalR" value="#{respController.selected.ehprincipal}" />
+
+                        <h:outputLabel value="Selecione uma Crianca" />
+                        <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}" required="true"  >
+                            <f:selectItem itemLabel="---" itemValue="" /> 
+                            <f:selectItems value="#{respController.criancas}" var="crianca"    />
+                        </p:selectOneMenu>
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Salvar" actionListener="#{respController.createOrUpdate()}" update="msg" />
+                        </f:facet>
+
+                    </p:panelGrid>
+                </h:form>
+                <br />
+
+
+            </div>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>

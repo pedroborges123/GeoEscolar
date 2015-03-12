@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewResponsavelTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_tipoRes}"/>
+                    <h:outputText value="#{responsavelController.selected.tipoRes}" title="#{bundle.ViewResponsavelTitle_tipoRes}"/>
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_nome}"/>
+                    <h:outputText value="#{responsavelController.selected.nome}" title="#{bundle.ViewResponsavelTitle_nome}"/>
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_senha}"/>
+                    <h:outputText value="#{responsavelController.selected.senha}" title="#{bundle.ViewResponsavelTitle_senha}"/>
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_email}"/>
+                    <h:outputText value="#{responsavelController.selected.email}" title="#{bundle.ViewResponsavelTitle_email}"/>
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_telefone}"/>
+                    <h:outputText value="#{responsavelController.selected.telefone}" title="#{bundle.ViewResponsavelTitle_telefone}"/>
+                    <h:outputText value="#{bundle.ViewResponsavelLabel_id}"/>
+                    <h:outputText value="#{responsavelController.selected.id}" title="#{bundle.ViewResponsavelTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{responsavelController.destroyAndView}" value="#{bundle.ViewResponsavelDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewResponsavelEditLink}"/>
+                <br />
+                <h:commandLink action="#{responsavelController.prepareCreate}" value="#{bundle.ViewResponsavelCreateLink}" />
+                <br />
+                <h:commandLink action="#{responsavelController.prepareList}" value="#{bundle.ViewResponsavelShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewResponsavelIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditEnderecoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_tEndereco}" for="tEndereco" />
+                    <h:inputText id="tEndereco" value="#{enderecoController.selected.tEndereco}" title="#{bundle.EditEnderecoTitle_tEndereco}" />
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_CEP}" for="CEP" />
+                    <h:inputText id="CEP" value="#{enderecoController.selected.CEP}" title="#{bundle.EditEnderecoTitle_CEP}" />
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_logradouro}" for="logradouro" />
+                    <h:inputText id="logradouro" value="#{enderecoController.selected.logradouro}" title="#{bundle.EditEnderecoTitle_logradouro}" />
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_numero}" for="numero" />
+                    <h:inputText id="numero" value="#{enderecoController.selected.numero}" title="#{bundle.EditEnderecoTitle_numero}" />
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_complemento}" for="complemento" />
+                    <h:inputText id="complemento" value="#{enderecoController.selected.complemento}" title="#{bundle.EditEnderecoTitle_complemento}" />
+                    <h:outputLabel value="#{bundle.EditEnderecoLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{enderecoController.selected.id}" title="#{bundle.EditEnderecoTitle_id}" />
+                </h:panelGrid>
+                <h:commandLink action="#{enderecoController.update}" value="#{bundle.EditEnderecoSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditEnderecoViewLink}"/>
+                <br />
+                <h:commandLink action="#{enderecoController.prepareList}" value="#{bundle.EditEnderecoShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditEnderecoIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

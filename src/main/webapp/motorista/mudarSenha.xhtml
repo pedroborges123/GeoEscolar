@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/motorista/motoristaTemplate.xhtml">
+        <ui:define name="body"> 
+
+            <div class="conteudo" >
+                <h:form>
+                    <p:growl autoUpdate="true" id="MS" showDetail="true" />
+                    <h1>Mudar Senha </h1>
+                    <p:panelGrid columns="2" >
+
+                        <h:outputLabel for="pwd1" value="Senha Atual: *" />
+                        <p:password value="#{userController.senhaAtual}" />
+
+                        <h:outputLabel for="pwd1" value="Nova Senha: *" />
+                        <p:password id="pwd1" value="#{userController.senha}" match="pwd2" label="Password 1" required="true"   feedback="true"
+                                    promptLabel="Por Favor entre com a senha" weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Forte"/>
+
+                        <h:outputLabel for="pwd2" value="Repetir Senha: *" />
+                        <p:password id="pwd2" value="#{userController.senha}" label="Password 2" required="true" />
+
+
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{userController.mudarSenha()}" value="Salvar" update="msg" ajax="false"/>
+                </h:form>
+            </div>
+
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>

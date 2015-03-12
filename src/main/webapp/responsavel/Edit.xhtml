@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/responsavel/responsavelTemplate.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Responsavel- Editar Informacoes"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+
+           
+            <h:form>
+                <p:growl autoUpdate="true" id="msg" showDetail="true" />
+                <p:panelGrid columns="2">
+
+                    <h:outputLabel value="Nome: *" for="nomeM" />
+                    <p:inputText id="nomeM" value="#{respController.selected.nome}" title="Nome" required="true"/>
+
+                    <h:outputLabel value="Email: *" for="emailM" />
+                    <p:inputText id="emailM" value="#{respController.selected.email}" required="true" label="Email" >
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    </p:inputText>
+
+                    <h:outputLabel value="Telefone: *" for="telefoneM" />
+                    <p:inputMask id="telefoneM" value="#{respController.selected.telefone}" title="Telefone" mask="(999) ?999**9999" required="true" />
+
+                     <h:outputLabel value="Tipo: " for="tipoResR"  />
+                        <p:selectOneMenu id="tipoResR" value="#{respController.selected.tipoRes}" style="width:125px"  >
+                            <f:selectItem itemLabel="----" itemValue="" />
+                            <f:selectItem itemLabel="Pai" itemValue="#{respController.tipoPai}" />
+                            <f:selectItem itemLabel="Mae" itemValue="#{respController.tipoMae}" />
+                            <f:selectItem itemLabel="Tios" itemValue="#{respController.tipoTios}" />
+                            <f:selectItem itemLabel="Avos" itemValue="#{respController.tipoAvos}" />
+                            <f:selectItem itemLabel="Tutor" itemValue="#{respController.tipoTutor}" />
+                            <f:selectItem itemLabel="Padastros" itemValue="#{respController.tipoPadastros}" />
+                        </p:selectOneMenu>
+                
+                </p:panelGrid>
+                <p:commandLink action="#{respController.update}" value="Salvar" update="msg"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

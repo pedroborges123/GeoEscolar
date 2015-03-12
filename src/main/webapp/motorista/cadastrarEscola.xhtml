@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/motorista/motoristaTemplate.xhtml">
+        <ui:define name="body"> 
+
+            <div class="conteudo" >
+
+                <h:form >
+                    <p:growl autoUpdate="true" id="CC" showDetail="true" />
+                    <h:panelGrid columns="2" cellspacing="100">
+
+
+                        <h:column>
+                            <h1>Cadastrar Escola</h1>
+                            <p:panelGrid columns="2">
+                               
+
+                                <h:outputLabel value="Descricao:" for="descricao" />
+                                <p:inputText id="descricao" value="#{localidadeController.selected.descricao}"  required="true"/>
+
+                               
+                                <h:outputLabel value="CEP:" for="CEP" />
+                                <p:inputMask id="CEP" value="#{localidadeController.currentEndereco.CEP}"  required="true" mask="99999-999" onblur="atualizacep(this.value)"/>
+
+                                <h:outputLabel value="Logradouro:" for="logradouro" />
+                                <p:inputText id="logradouro" value="#{localidadeController.currentEndereco.logradouro}" required="true" />
+
+                                <h:outputLabel value="Bairro:" for="bairro" />
+                                <p:inputText id="bairro" value="#{localidadeController.currentEndereco.bairro}" required="true" />
+
+                                <h:outputLabel value="Cidade:" for="cidade" />
+                                <p:inputText id="cidade" value="#{localidadeController.currentEndereco.cidade}" required="true" />
+
+                                <h:outputLabel value="Estado:" for="uf" />
+                                <p:inputText id="uf" value="#{localidadeController.currentEndereco.uf}" required="true" />
+
+                                <h:outputLabel value="Numero:" for="numero" />
+                                <p:inputText id="numero" value="#{localidadeController.currentEndereco.numero}"  required="true"/>
+
+                                <h:outputLabel value="Complemento:" for="complemento" />
+                                <p:inputText id="complemento" value="#{localidadeController.currentEndereco.complemento}" required="true" />
+                            </p:panelGrid>
+
+                        </h:column>
+
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{localidadeController.createEscolaByMotorista()}" value="Cadastrar" update="msg" ajax="false"/>
+
+
+
+                </h:form>
+
+            </div>
+
+        </ui:define>
+
+        <script>
+            function atualizacep(cep) {
+                alert('entrou aqui');
+                cep = cep.replace(/\D/g, "");
+                url = "http://cep.correiocontrol.com.br/" + cep + ".js";
+                s = document.createElement('script');
+                s.setAttribute('charset', 'utf-8');
+                s.src = url;
+                document.querySelector('head').appendChild(s);
+            }
+
+            function correiocontrolcep(valor) {
+                if (valor.erro) {
+                    alert('Cep não encontrado');
+                    return;
+                }
+
+                document.getElementById('logradouro').value = valor.logradouro;
+                document.getElementById('bairro').value = valor.bairro;
+                document.getElementById('cidade').value = valor.localidade;
+                document.getElementById('uf').value = valor.uf;
+            }
+        </script>
+
+    </ui:composition>
+
+
+
+
+</html>

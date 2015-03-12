@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+
+
+    <ui:composition template="/responsavel/responsavelTemplate.xhtml">
+
+
+
+        <ui:define name="body" > 
+
+
+
+            <f:event listener="#{respController.inializa()}"  type="preRenderComponent" />
+            <h:form >
+                <p:growl autoUpdate="true" id="msg"  />
+                <div  >
+
+
+                    <p:panelGrid columns="2" style="margin-bottom:10px"  id="filho">
+
+                        <f:facet name="header" >
+
+                            <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}"  >
+                                <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
+                                <f:selectItems value="#{respController.allCriancaOfResp}"  />
+                            </p:selectOneMenu>
+                            <p:commandButton value="Show" update="@all" />
+
+                        </f:facet>                         
+
+                        <h:outputText value="Nome: " />
+                        <h:outputText value="#{respController.currentCrianca.nome}" />
+
+                        <h:outputText value="Idade: " />
+                        <h:outputText value="#{respController.currentCrianca.idade}" />
+
+                        <h:outputText value="Motorista: " />
+                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
+
+                        <h:outputText value="Escola: " />
+                        <h:outputText value="#{respController.currentCrianca.escola.descricao}" />
+
+                        <f:facet name="footer">
+                            <p:commandButton value="Localizar" onclick="calcRoute();" />
+                        </f:facet> 
+
+                    </p:panelGrid>
+
+
+                    <p:outputLabel value="Inicio: #{respController.localizacao.get(0)}" id="start"  />
+                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item"  >
+                        #{item.toString()}
+                    </p:dataList>
+
+                    <p:outputLabel value=" Final: #{respController.localizacao.get(respController.listTam-2)}" id="end"  />
+
+                </div>
+
+                <div   >
+
+                    <p:gmap center="-20.817584,-41.605848" zoom="8" type="hybrid" style="width:200px;height:500px; border: 4px black;" model="#{maps.advancedModel}" />
+
+                </div>
+            </h:form>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>

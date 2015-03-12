@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/motorista/motoristaTemplate.xhtml" >
+        <ui:define name="body" rendered="#{userController.motoristaLogado()}" > 
+            <p:growl id="msg" showDetail="true"  autoUpdate="true"/>
+            <div class="conteudo">
+                
+
+                <h:form>
+
+
+                    <p:panelGrid columns="2"  >
+                        <h:column  >
+                            <br/><br/><br/>
+                            <p:panelGrid columns="2">
+                                <f:facet name="header" >
+                                    <h3>Gerar Codigo de Veiculo</h3>  
+                                </f:facet>
+
+                                <p:commandButton value="Gerar" actionListener="#" ajax="false" />
+                                <p:inputText value="#" disabled="true" id="codigo"/>
+
+                            </p:panelGrid>
+                            <br/> <br/> <br/> <br/>
+                        </h:column>
+                        <h:column >
+
+
+                            <h:panelGroup  >
+
+                                <p:dataTable id="table" value="#{criancaController.listCriancas}" var="item"  liveResize="true" > 
+                                    <f:facet name="header">
+                                        <h:outputText value="Lista Criancas"/>  <br/>
+
+                                    </f:facet>
+
+                                    <f:facet name="footer">
+                                        <h:outputText value="Total: #{criancaController.rowCont} "/>
+
+                                    </f:facet>
+
+                                    <p:column headerText="Nome" >
+                                        <f:facet name="header" >
+                                            <h:outputText value="Nome"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Idade" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Idade"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.idade}"/>
+                                    </p:column>
+                                    <p:column headerText="Sexo" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Sexo"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.sexo}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Escola" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Escola"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.escola.toString()}"/>
+                                    </p:column>
+
+                                    <p:column headerText="Casa" >
+                                        <f:facet name="header">
+                                            <h:outputText value="Casa"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.casa.toString()}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGroup>
+
+                        </h:column>
+
+                    </p:panelGrid>
+
+                </h:form>
+
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+
+
+
+</html>

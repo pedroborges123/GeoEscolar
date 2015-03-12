@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewEnderecoTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_tEndereco}"/>
+                    <h:outputText value="#{enderecoController.selected.tEndereco}" title="#{bundle.ViewEnderecoTitle_tEndereco}"/>
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_CEP}"/>
+                    <h:outputText value="#{enderecoController.selected.CEP}" title="#{bundle.ViewEnderecoTitle_CEP}"/>
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_logradouro}"/>
+                    <h:outputText value="#{enderecoController.selected.logradouro}" title="#{bundle.ViewEnderecoTitle_logradouro}"/>
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_numero}"/>
+                    <h:outputText value="#{enderecoController.selected.numero}" title="#{bundle.ViewEnderecoTitle_numero}"/>
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_complemento}"/>
+                    <h:outputText value="#{enderecoController.selected.complemento}" title="#{bundle.ViewEnderecoTitle_complemento}"/>
+                    <h:outputText value="#{bundle.ViewEnderecoLabel_id}"/>
+                    <h:outputText value="#{enderecoController.selected.id}" title="#{bundle.ViewEnderecoTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{enderecoController.destroyAndView}" value="#{bundle.ViewEnderecoDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewEnderecoEditLink}"/>
+                <br />
+                <h:commandLink action="#{enderecoController.prepareCreate}" value="#{bundle.ViewEnderecoCreateLink}" />
+                <br />
+                <h:commandLink action="#{enderecoController.prepareList}" value="#{bundle.ViewEnderecoShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewEnderecoIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

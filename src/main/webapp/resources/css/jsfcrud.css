@@ -1,0 +1,376 @@
+root { 
+    display: block;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3a4f54;
+    background-color: white;
+    font-size: small;
+}
+
+
+.respondida{
+    background: greenyellow;
+    color: black;
+    font-size: large;
+    font-weight: lighter;
+
+}
+
+.naorespondida{
+
+    background: red;
+    color: black;
+    font-size: large;
+    font-weight: lighter;
+}
+
+table {
+    empty-cells: show;
+}
+
+form.jsfcrud_list_form th, td th {
+    font-size: x-small;
+    color: #4e6a71;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #90b4bd;
+    border-right-color: #90b4bd;
+    letter-spacing: 3px;
+    text-align: left;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: white;
+}
+
+td {
+    vertical-align: top;
+    padding-bottom: 8px;
+    font-size: small;
+}
+
+form.jsfcrud_list_form td, td td {
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #b2d5d6;
+    border-right-color: #b2d5d6;
+    vertical-align: baseline;
+    padding-bottom: 0px;
+}
+
+tr.jsfcrud_odd_row {
+    background-color: #fefeff;
+    color: #4e6a71;
+}
+
+
+tr.jsfcrud_even_row {
+    background-color: #eff5fa;
+    color: #4e6a71;
+}
+
+#busyImage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.motorista{
+    background-image: url(../..//transporte-escolar.jpg) ; 
+    width: 500px;
+    height: 400px;
+    alignment-baseline: central;
+    alignment-adjust: central;
+    resize: both;
+    left: 10%;
+    top: 10%;
+
+    font-weight: bold;
+    font-size: large ;
+    text-align: left;
+    text-align-last: auto;
+    margin-top: 50px;
+    margin-left: 100px;
+    color: transparent;
+
+}
+
+.motoristaPainelDireito{
+    float: right;
+    height: 100%;
+    width: 79% ;
+    resize: both; 
+    border: 1px solid gold;
+}
+
+.motoristaPainelEsquerdo{
+    border: 1px solid orange;
+    text-align: center;
+    float: left;
+    height: 100%;
+    color: black;
+    background-position:  center;    
+    width: 19% ;
+    resize: both; 
+    font-size: 10px;
+}
+
+.conteudoErrorPage{
+    color: #FFFFFF;
+    display: block;
+    line-height: 24px;
+    margin: 4em auto;
+    padding: 30px 40px;
+    text-align: center;
+    width: 80%
+}
+
+.errorPage{
+
+    background-image: url(../..//3.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-weight: 200;
+    height: 700px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.errorPage h1{
+    display: block;
+    font-size: 6em;
+    margin: 0px;
+    text-transform: uppercase;
+
+}
+
+.errorPage h2{
+    display: block;
+    font-size: 2em;
+    margin: 0px;
+    text-transform: uppercase;
+}
+
+
+.link{
+    color: black;
+}
+
+.cadastro{
+    margin-top: 10px;
+    background: transparent;
+    margin-left: 40%;
+}
+
+.pais{
+    background-image: url(../..//pais.jpg);
+
+    width: 300px;
+    height: 400px;
+    alignment-baseline: central;
+    alignment-adjust: central;
+    resize: both;
+    left: 30%;
+    margin-top: 50px; 
+    margin-left: 200px;
+    color: black;
+    font-weight: bold;
+    font-size: large ;
+    text-align: justify;
+    color: transparent;
+
+}
+
+
+.layout{
+    position: absolute;
+    left: 15%;
+    right: 15%;
+    border: 1px solid  red;
+}
+
+.logo {
+
+    background:  url("../..//body.png") repeat-x ;
+    border: 1px solid blue;
+    width:100%;
+    position: static;
+    top: initial;  
+    alignment-adjust:  central;
+    height: 100px;
+
+
+}
+
+.conteudo {
+
+    background:  #fff ; 
+    font-family: verdana, Helvetica, sans-serif; 
+    font-size: 12px; 
+    margin: 0px;
+    text-align: left;
+    word-spacing: 3px;
+    color:  black;
+    size: portrait;
+    border: 1px solid violet;
+
+}
+
+
+
+
+.rodape {
+    background: #222222 url("../..//footer.png")  repeat-x;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px; 
+    border: 1px solid yellow;
+    height: 70px;
+}
+
+.rodape a{
+    color: white;
+}
+
+.painelEsquerdo{
+    background:  white url("../..//hover.png") 50% 50% repeat-x;
+    border: 1px solid orange;
+
+    float: left;
+    height: 500px;
+    color: black;
+    background-position:  center;    
+    width: 49% ;
+    resize: both; 
+
+}
+.painelDireito{
+    background:  white url("../..//hover.png") 50% 50% repeat-x;
+    float: right;
+    height: 500px;
+    width: 49% ;
+    resize: both; 
+    border: 1px solid gold;
+}
+
+
+.parteDireita{
+    float: right;
+    
+    width: 69% ;
+    resize: both; 
+    border: 1px solid gold;
+    
+}
+
+
+.parteEsquerda{
+      border: 1px solid orange;
+
+    float: left;
+    
+    color: black;
+    background-position:  center;    
+    width: 30% ;
+    resize: both; 
+    
+}
+
+.center{
+
+    left: 300px;
+    right: 300px;
+    float: top;
+    margin: 20px;
+    alignment-adjust: central;
+    resize: both;   
+
+    background-repeat:  no-repeat;
+    border-collapse: separate;
+    border-spacing: 10px 50px;
+    padding: 10px; 
+    border: 1px solid green;
+
+
+}
+
+.menuBar{
+    appearance: pop-up-menu; 
+    height:30px; 
+    border: solid 0px;   
+    top: auto; 
+    font-size: 12px; 
+    bottom: auto;
+    text-align: right;
+}
+
+.login{
+    border: 1px solid;
+    margin: 10px;
+    margin-left: 180px;
+    background: #fff;
+    color: black;
+    text-decoration: black solid;
+    padding: 3px;
+    width: 300px;
+
+}
+.login a:link{
+    color: black;
+    text-decoration: black solid;
+
+}
+
+.conosco {
+    background: white;
+
+}
+
+
+
+.bloco{
+
+
+    background:  url("../..//nota.jpeg") no-repeat;
+    color: black;
+    resize: both;   
+    width: 250px;
+    border: 1px solid red;
+
+    border-collapse: separate;
+    border-spacing: 10px 50px;
+    padding: 10px; 
+    margin: 10px;
+    margin-left: 200px; 
+    margin-top: 100px;
+}
+
+.bloco a{
+    color: black;
+    text-decoration: black solid;
+
+}

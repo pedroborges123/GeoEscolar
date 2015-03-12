@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateAdmTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body" >
+            <div class="conteudo" onload="#{userController.controleAcessoAdm()}">
+                <f:event type="preRenderComponent" listener="#{userController.controleAcessoAdm()}" />
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+               
+                <h:form rendered="#{userController.admLogado()}">
+                    <p:growl id="msg" showDetail="true" autoUpdate="true" /> 
+                    <p:panelGrid columns="2" >
+
+                        <f:facet name="header" >
+                            <p:outputLabel value="Criar Novo ADM" />
+                        </f:facet>
+                        
+                        <f:facet name="footer">
+                            <p:commandButton value="Salvar" ajax="false" update="msg" actionListener="#{admController.create()}" />
+                        </f:facet>
+                        
+                        <h:outputLabel value="Nome: " for="nome" />
+                        <h:inputText id="nome" value="#{admController.selected.nome}" required="true" />
+                        
+                        <h:outputLabel value="Email" for="email" />
+                        <h:inputText id="email" value="#{admController.selected.email}"  />
+                        
+                        <h:outputLabel value="Telefone" for="telefone" />
+                        <p:inputMask id="telefone" value="#{admController.selected.telefone}"  mask="(999) 999-9999" required="true" />
+                        <h:outputLabel for="pwd1" value="Senha 1: *" />
+                        <p:password id="pwd1" value="#{admController.selected.senha}" match="pwd2" label="Password 1" required="true"   feedback="true"
+                                    promptLabel="Por Favor entre com a senha" weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Forte"/>
+
+                        <h:outputLabel for="pwd2" value="Repetir Senha: *" />
+                        <p:password id="pwd2" value="#{admController.selected.senha}" label="Password 2" required="true" />
+
+                    </p:panelGrid>
+                    <br />
+
+                    <h:link outcome="/admgeo.xhtml" value="Voltar"/>
+                </h:form>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+</html>

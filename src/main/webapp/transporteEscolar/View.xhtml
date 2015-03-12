@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewTransporteEscolarTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_placa}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.placa}" title="#{bundle.ViewTransporteEscolarTitle_placa}"/>
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_marca}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.marca}" title="#{bundle.ViewTransporteEscolarTitle_marca}"/>
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_capacidade}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.capacidade}" title="#{bundle.ViewTransporteEscolarTitle_capacidade}"/>
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_registro}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.registro}" title="#{bundle.ViewTransporteEscolarTitle_registro}"/>
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_motorista}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.motorista}" title="#{bundle.ViewTransporteEscolarTitle_motorista}"/>
+                    <h:outputText value="#{bundle.ViewTransporteEscolarLabel_id}"/>
+                    <h:outputText value="#{transporteEscolarController.selected.id}" title="#{bundle.ViewTransporteEscolarTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{transporteEscolarController.destroyAndView}" value="#{bundle.ViewTransporteEscolarDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewTransporteEscolarEditLink}"/>
+                <br />
+                <h:commandLink action="#{transporteEscolarController.prepareCreate}" value="#{bundle.ViewTransporteEscolarCreateLink}" />
+                <br />
+                <h:commandLink action="#{transporteEscolarController.prepareList}" value="#{bundle.ViewTransporteEscolarShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewTransporteEscolarIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

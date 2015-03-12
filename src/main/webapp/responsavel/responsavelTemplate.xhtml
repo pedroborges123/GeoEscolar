@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">GeoEscolar-Responsavel</ui:insert></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="javascript" name="GeoEscolar.js" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        <h:outputLink rel="stylesheet" value="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
+        <h:outputStylesheet library="css" name="font-awesome.min.css" />
+        <link href="https://maps.googleapis.com/maps/api/" rel="javascript" />
+        <h:outputLink rel="javascript" value="https://maps.googleapis.com/maps/api/js"/>
+    </h:head>
+
+    <h:body>
+        <div class="layout" >
+            
+
+            <div>
+
+                <h:form>     
+                    <p:growl autoUpdate="true" id="msg" showDetail="true" />
+
+
+                    <p:toolbar>
+                        <f:facet name="right">
+                            <h:outputText value="Bem Vindo #{userController.userName()}" rendered="#{userController.logado()}" style="margin-right:10px" />
+                            <p:commandButton value="Motorista" rendered="#{userController.motoristaLogado()}" actionListener="#{userController.redirectTo('motorista.xhtml')}" />
+                            <p:commandButton value="Responsavel" rendered="#{userController.responsavelLogado()}" actionListener="#{userController.redirectTo('responsavel/responsavel.xhtml')}" /> 
+                            <p:commandButton value="Home" actionListener="#{userController.redirectTo('index.xhtml')}"   />
+                            <p:commandButton value="Sobre"  actionListener="#{userController.redirectTo('sobre.xhtml')}"   />
+                            <p:commandButton value="Administracao" actionListener="#{userController.prepareAdm()}"   />
+                            <p:commandButton value="Fale Conosco" actionListener="#{faleConoscoController.prepareCreate()}"  icon="ui-icon-mail-closed"  />
+                            <p:commandButton value="Cadastre-se"  actionListener="#{userController.redirectTo('cadastro.xhtml')}"    rendered="#{!userController.logado()}"/>
+                            <p:commandButton   rendered="#{userController.logado()}" value="Logout" actionListener="#{userController.logOut()}" icon="ui-icon-extlink" />
+                        </f:facet>
+
+
+                    </p:toolbar>
+
+                </h:form>
+            </div >
+            <div class="logo">
+                <br/>
+                <center><h1> GeoEscolar </h1>  </center>
+
+            </div>
+
+            <div>
+                <h:form>
+                    <p:tabMenu id="i"  activeIndex="#{param.i}" >
+                        <p:menuitem value="Principal"  actionListener="#{userController.redirectTo('responsavel/responsavel.xhtml')}" icon="ui-icon-star">
+                            <f:param name="i"  value="0"   />
+                        </p:menuitem>
+                        <p:menuitem value="Editar Informacoes" actionListener="#{respController.prepareEdit()}" icon="ui-icon-search">
+                            <f:param name="i" value="1"  />
+                        </p:menuitem>
+                        <p:menuitem value="Editar Informacoes Filho(s)" actionListener="#" icon="ui-icon-document">
+                            <f:param name="i" value="2"  />
+                        </p:menuitem>
+                        
+                        <p:menuitem value="Verificar Dados Motorista" actionListener="#" icon="ui-icon-document">
+                            <f:param name="i" value="3"  />
+                        </p:menuitem>
+
+                    </p:tabMenu>
+
+                    <p>
+
+                        <ui:insert class="conteudo"  name="body">Default Body</ui:insert>
+
+
+
+                    </p>
+                </h:form>
+            </div>
+
+            <div class="rodape">
+                <h:form>
+                    <header>
+                        <span>2015 Danilo e Pedro, Todos os direitos reservados</span> 
+                    </header> <br/>
+                    <p:commandLink value="Mapa Site"  actionListener="#{userController.redirectTo('mapa.xhtml')}" /> <br/>
+                    <p:commandLink value="ErrorPage" actionListener="#{userController.redirectTo('404.xhtml')}" />
+                </h:form>
+            </div>
+
+        </div>     
+    </h:body>
+
+</html>

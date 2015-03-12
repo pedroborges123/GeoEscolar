@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml" >
+
+        <f:metadata>
+
+            <f:viewParam name="codigo" value="#{respController.codigo}" />
+            <f:event type="preRenderComponent" listener="#{respController.atualizaDadosByEmail()}" /> 
+        </f:metadata>
+
+        <ui:define name="body"  > 
+           
+            <div class="conteudo">
+
+
+                <h:form>
+                     <p:growl id="msg" showDetail="true"  autoUpdate="true"/>
+                    <div class="painelEsquerdo">
+
+                        <p:panelGrid columns="2"   id="cadastrar"   >
+
+                            <f:facet name="header" >
+                                <h1> Seus Dados </h1>
+                            </f:facet>
+
+                            <h:outputLabel value="Tipo: " for="tipoResR"  />
+                            <p:selectOneMenu id="tipoResR" value="#{respController.selected.tipoRes}"   >
+                                <f:selectItem itemLabel="----" itemValue="" />
+                                <f:selectItem itemLabel="Pai" itemValue="#{respController.tipoPai}" />
+                                <f:selectItem itemLabel="Mae" itemValue="#{respController.tipoMae}" />
+                                <f:selectItem itemLabel="Tios" itemValue="#{respController.tipoTios}" />
+                                <f:selectItem itemLabel="Avos" itemValue="#{respController.tipoAvos}" />
+                                <f:selectItem itemLabel="Tutor" itemValue="#{respController.tipoTutor}" />
+                                <f:selectItem itemLabel="Padastros" itemValue="#{respController.tipoPadastros}" />
+                            </p:selectOneMenu>
+
+                            <h:outputLabel value="Nome: *" for="nomeR" />
+                            <p:inputText id="nomeR" value="#{respController.selected.nome}"  />
+
+                            <h:outputLabel value="Email: *" for="emailR" />
+                            <p:inputText id="emailR" value="#{respController.selected.email}"  label="Email" >
+                                <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                            </p:inputText>
+
+                            <h:outputLabel value="Telefone: *" for="telefoneR" />
+                            <p:inputMask id="telefoneR" value="#{respController.selected.telefone}"  mask="(999) ?999**9999" required="true" />
+
+                            <h:outputLabel value="Principal: *" for="principalR" />
+                            <p:selectBooleanCheckbox id="principalR" value="#{respController.selected.ehprincipal}" />
+
+                          
+                            <h:outputLabel for="pwd1" value="Senha 1: *" />
+                            <p:password id="pwd1" value="#{respController.selected.senha}" match="pwd2" label="Password 1" required="true"   feedback="true"
+                                        promptLabel="Por Favor entre com a senha" weakLabel="Fraca"
+                                        goodLabel="Boa" strongLabel="Forte"/>
+
+                            <h:outputLabel for="pwd2" value="Repetir Senha: *" />
+                            <p:password id="pwd2" value="#{respController.selected.senha}" label="Password 2" required="true" />
+
+
+                            <f:facet name="footer">
+                                <p:commandButton value="Salvar" actionListener="#{respController.salvarDadosByEmail()}" update="msg" />
+                            </f:facet>
+
+                        </p:panelGrid>
+
+                    </div>
+                    <div class="painelDireito" >
+                        <h1>Se o senhor(a) já é cadastrado em nosso sistema, clique aqui </h1>
+                        <div class="login">
+                            <p:fieldset legend="Login" >
+                                <h:panelGrid columns="2" cellspacing="3" >
+                                    <h:outputLabel value="Email: " />
+                                    <p:inputText type="email" value="#{userController.email}" />
+                                    <h:outputLabel value="Senha: " />
+                                    <p:password value="#{userController.senha}" />
+                                    
+                                    <p:commandButton actionListener="#{userController.loginResponsavelByEmail()}" value="Login" ajax="false"  icon="ui-icon-arrowreturn-1-e" update="msg"/>
+
+                                </h:panelGrid>
+
+                            </p:fieldset>
+                        </div>
+
+                    </div>
+                </h:form>
+
+            </div>
+
+        </ui:define>
+
+    </ui:composition>
+
+
+
+
+</html>

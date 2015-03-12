@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewCriancaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewCriancaLabel_sexo}"/>
+                    <h:outputText value="#{criancaController.selected.sexo}" title="#{bundle.ViewCriancaTitle_sexo}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_idade}"/>
+                    <h:outputText value="#{criancaController.selected.idade}" title="#{bundle.ViewCriancaTitle_idade}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_nome}"/>
+                    <h:outputText value="#{criancaController.selected.nome}" title="#{bundle.ViewCriancaTitle_nome}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_senha}"/>
+                    <h:outputText value="#{criancaController.selected.senha}" title="#{bundle.ViewCriancaTitle_senha}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_email}"/>
+                    <h:outputText value="#{criancaController.selected.email}" title="#{bundle.ViewCriancaTitle_email}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_telefone}"/>
+                    <h:outputText value="#{criancaController.selected.telefone}" title="#{bundle.ViewCriancaTitle_telefone}"/>
+                    <h:outputText value="#{bundle.ViewCriancaLabel_id}"/>
+                    <h:outputText value="#{criancaController.selected.id}" title="#{bundle.ViewCriancaTitle_id}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{criancaController.destroyAndView}" value="#{bundle.ViewCriancaDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewCriancaEditLink}"/>
+                <br />
+                <h:commandLink action="#{criancaController.prepareCreate}" value="#{bundle.ViewCriancaCreateLink}" />
+                <br />
+                <h:commandLink action="#{criancaController.prepareList}" value="#{bundle.ViewCriancaShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewCriancaIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

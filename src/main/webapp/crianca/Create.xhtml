@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateCriancaTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_sexo}" for="sexo" />
+                    <h:inputText id="sexo" value="#{criancaController.selected.sexo}" title="#{bundle.CreateCriancaTitle_sexo}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_idade}" for="idade" />
+                    <h:inputText id="idade" value="#{criancaController.selected.idade}" title="#{bundle.CreateCriancaTitle_idade}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_nome}" for="nome" />
+                    <h:inputText id="nome" value="#{criancaController.selected.nome}" title="#{bundle.CreateCriancaTitle_nome}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_senha}" for="senha" />
+                    <h:inputText id="senha" value="#{criancaController.selected.senha}" title="#{bundle.CreateCriancaTitle_senha}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_email}" for="email" />
+                    <h:inputText id="email" value="#{criancaController.selected.email}" title="#{bundle.CreateCriancaTitle_email}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_telefone}" for="telefone" />
+                    <h:inputText id="telefone" value="#{criancaController.selected.telefone}" title="#{bundle.CreateCriancaTitle_telefone}" />
+                    <h:outputLabel value="#{bundle.CreateCriancaLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{criancaController.selected.id}" title="#{bundle.CreateCriancaTitle_id}" />
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{criancaController.create}" value="#{bundle.CreateCriancaSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{criancaController.prepareList}" value="#{bundle.CreateCriancaShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateCriancaIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
