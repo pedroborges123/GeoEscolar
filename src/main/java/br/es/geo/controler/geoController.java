@@ -46,22 +46,42 @@ public class geoController implements Serializable {
         advancedModel = new DefaultMapModel();
         List<String> list = (List<String>) JsfUtil.getElementSession("localizacao");
         System.out.println(list);
+        String inicio = (String) JsfUtil.getElementSession("inicio");
+        String fim = (String) JsfUtil.getElementSession("fim");
         //Shared coordinates
-
+        // adicionando o ponto inicial
+        String[] y = inicio.split(",");
+        String lat = y[0];
+        String lon = y[1];
+        Double la = Double.parseDouble(lat);
+        Double lo = Double.parseDouble(lon);
+        LatLng coord = new LatLng(la, lo);
+        advancedModel.addOverlay(new Marker(coord, "Inicio da Rota"));
+        // adicionando o ponto intermediarios da rota
         for (int i = 0; i < list.size(); i++) {
-            String[] y = list.get(i).split(",");
-            String lat = y[0];
-            String lon = y[1];
+            y = list.get(i).split(",");
+            lat = y[0];
+            lon = y[1];
 
-            Double la = Double.parseDouble(lat);
-            Double lo = Double.parseDouble(lon);
+            la = Double.parseDouble(lat);
+            lo = Double.parseDouble(lon);
 
-            LatLng coord = new LatLng(la, lo);
+            coord = new LatLng(la, lo);
 
-            advancedModel.addOverlay(new Marker(coord));
+            advancedModel.addOverlay(new Marker(coord, "Pontos Intermediarios"));
 
         }
+        // adicionando o ponto final da rota
+        y = fim.split(",");
+        lat = y[0];
+        lon = y[1];
+         la = Double.parseDouble(lat);
+         lo = Double.parseDouble(lon);
+        coord = new LatLng(la, lo);
+        advancedModel.addOverlay(new Marker(coord, "Fim da Rota"));
 
+        
+        
     }
 
 }

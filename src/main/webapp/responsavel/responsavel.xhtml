@@ -4,7 +4,7 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
@@ -19,177 +19,105 @@ and open the template in the editor.
 
         <ui:define name="body" > 
 
-            <style>
-                html, body, #map-canvas {
-                    height: 300px;
-                    margin: 0px;
-                    padding: 0px
-                }
-                #panel {
-                    position: absolute;
-                    top: 5px;
-                    left: 50%;
-                    margin-left: -180px;
-                    z-index: 5;
-                    background-color: #fff;
-                    padding: 5px;
-                    border: 1px solid #999;
-                }
-            </style>
 
 
-
-            <script type="text/javascript">
-                var directionsDisplay;
-                var directionsService = new google.maps.DirectionsService();
-                var gmap;
-                //Brasil
-                var lat = -25.348761;
-                var lon = -41.494654;
-
-
-                function initialize() {
-                    directionsDisplay = new google.maps.DirectionsRenderer();
-                    var c = new google.maps.LatLng(lat, lon);
-
-                    gmap = new PF('maps').getMap();
-                    directionsDisplay.setMap(gmap);
-                }
-
-                function calcRoute() {
-                    var start = document.getElementById('start').value;
-                    var end = document.getElementById('end').value;
-                    var waypts = [];
-                    alert(start);
-                    var checkboxArray = document.getElementById('points');
-                    //<![CDATA[ 
-                    for (var i = 0; i < checkboxArray.length; i++) {
-                        if (checkboxArray.options[i].selected == true) {
-                            waypts.push({
-                                location: checkboxArray[i].value,
-                                stopover: true});
-                        }
-                    }
-//]]>
-                    var request = {
-                        origin: start,
-                        destination: end,
-                        //waypoints: waypts,
-                        optimizeWaypoints: true,
-                        travelMode: google.maps.TravelMode.DRIVING
-                    };
-                    directionsService.route(request, function (response, status) {
-                        if (status == google.maps.DirectionsStatus.OK) {
-                            directionsDisplay.setDirections(response);
-                            var route = response.routes[0];
-                            var summaryPanel = document.getElementById('directions_panel');
-                            summaryPanel.innerHTML = '';
-
-                        }
-                    });
-                }
-
-                google.maps.event.addDomListener(window, 'load', initialize);
-
-            </script>
-
-
-
-            <f:event listener="#{respController.inializa()}"   type="preRenderComponent" />
+            <f:event listener="#{respController.inializa()}"  type="preRenderComponent" />
             <h:form >
                 <p:growl autoUpdate="true" id="msg"  />
                 <div class="parteEsquerda" >
 
 
-                    <p:panelGrid style="margin-top:20px; background-color: white; " rendered="#{respController.filhos}">
+                    <p:panelGrid columns="2" style="margin-bottom:10px"  id="filho">
 
                         <f:facet name="header" >
-                            <p:row>
-                                <p:column colspan="2" >
-                                    <p:outputLabel value="Dados da Crianca" />
-                                </p:column> 
 
-                            </p:row>
+                            <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}"  >
+                                <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
+                                <f:selectItems value="#{respController.allCriancaOfResp}"  />
+                            </p:selectOneMenu>
+                            <p:commandButton value="Show" update="@all" />
+
+                        </f:facet>                         
+
+                        <h:outputText value="Nome: " />
+                        <h:outputText value="#{respController.currentCrianca.nome}" />
+
+                        <h:outputText value="Idade: " />
+                        <h:outputText value="#{respController.currentCrianca.idade}" />
+
+                        <h:outputText value="Motorista: " />
+                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
+
+                        <h:outputText value="Escola: " />
+                        <h:outputText value="#{respController.currentCrianca.escola.descricao}" />
 
 
-                        </f:facet>      
-
-                        <f:facet name="footer" >
-                            <p:row>
-                                <p:column colspan="2" >
-                                    <p:outputLabel value="Dados da Crianca" />
-                                </p:column> 
-
-                            </p:row>
-
-                        </f:facet>      
-
-                        <p:row>
-                            <p:column>
-                                <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}"  > 
-                                    <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
-                                    <f:selectItems value="#{respController.allCriancaOfResp}"  />
-                                </p:selectOneMenu>
-                            </p:column>
-                            <p:column> <p:commandButton value="Show" update="@all" /> </p:column>
-                        </p:row>
-                        <p:row >
-                            <p:column  colspan="2">
-                                <p:panelGrid columns="2" style="margin-bottom:10px; width: 100px; "   id="filho">
-
-                                    <f:facet name="header"  >
-                                        <p:outputLabel value="  "  style=" height: 30px;" />
-                                    </f:facet>
-
-                                    <h:outputText value="Nome: " />
-                                    <h:outputText value="#{respController.currentCrianca.nome}" />
-
-                                    <h:outputText value="Idade: " />
-                                    <h:outputText value="#{respController.currentCrianca.idade}" />
-
-                                    <h:outputText value="Motorista: " />
-                                    <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
-
-                                    <h:outputText value="Escola: " />
-                                    <h:outputText value="#{respController.currentCrianca.escola.descricao}" />
-
-                                   
-                                      
-                                  
-
-                                </p:panelGrid>
-                            </p:column>
-                        </p:row>
                     </p:panelGrid>
 
+
                 </div>
 
-                <div  class="parteDireita" >
 
-                    <center> <h1> Localizacao </h1> </center>
-                    
-                    
-                    <div>
-                        <p:messages id="messages" showDetail="true" autoUpdate="true"  />
-                        <p:gmap id="mapa" center="-25.348761, -41.494654" type="hybrid" widgetVar="maps" zoom="6" style="float:top;width:100%;height:500px; border: #000 3px ; " />
-                        <p:commandButton value="Localizar" update="mapa" type="submit" onclick="calcRoute();" />
-                    </div>
-
-
-                    <br/><br/><br/><br/><br/><br/>
-                   
-                     
-                    
-                    <p:outputLabel value="#{respController.inicio}" id="start"  />
-                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item"   >
-                        #{item.toString()}
-                    </p:dataList>
-                    <p:outputLabel value="#{respController.localizacao.size()}"   /> <br/>
-
-                    <p:outputLabel value="#{respController.fim}" id="end"  />
-                </div>
             </h:form>
+
+            <div class="parteDireita" >
+
+
+                <center> <h1> Localizacao </h1> </center>
+                <center> <h1>  <p:outputLabel value=" Rota em Andamento " rendered="#{!respController.finalizado}"   />  </h1> </center>
+
+
+                <div>
+                    <p:gmap center="-20.817584,-41.605848" zoom="6" type="hybrid" style="float:top;width:100%;height:500px; border: #000 3px;"  model="#{maps.advancedModel}" />
+
+                </div>
+                <br/><br/><br/><br/><br/><br/>
+            </div>
         </ui:define>
+
+        <script type="text/javascript">
+            var directionsDisplay;
+            var directionsService = new google.maps.DirectionsService();
+            var gmap;
+
+
+
+
+            function initialize() {
+                directionsDisplay = new google.maps.DirectionsRenderer();
+                gmap = new PF('maps').getMap();
+                directionsDisplay.setMap(gmap);
+                var inicio = gmap.getMap().markers[0];
+                var tam = gmap.getMap().markers.length;
+                var fim = gmap.getMap().markers[tam - 1];
+                var waypts = [];
+                var points = gmap.getMap().markers;
+                //<![CDATA[       
+                for (var i = 1; i < gmap.getMap().markers.length - 1; i++) {
+                    waypts.push({
+                        location: points[i].value,
+                        stopover: true});
+                }
+                //]]>
+                var request = {
+                    origin: inicio,
+                    destination: fim,
+                    waypoints: waypts,
+                    optimizeWaypoints: true,
+                    travelMode: google.maps.TravelMode.DRIVING};
+                directionsService.route(request, function (response, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                    }
+
+                });
+
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+     
+        </script>
+
 
 
     </ui:composition>

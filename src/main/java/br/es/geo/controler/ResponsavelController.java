@@ -66,6 +66,7 @@ public class ResponsavelController implements Serializable {
     private int selectedItemIndex;
     private String codigo;
     private Boolean filhos;
+    private Boolean finalizado;
 
     public ResponsavelController() {
     }
@@ -82,6 +83,12 @@ public class ResponsavelController implements Serializable {
         this.localizacao = localizacao;
     }
 
+    public Boolean getFinalizado() {
+        return finalizado;
+    }
+
+    
+    
     public String getInicio() {
         return inicio;
     }
@@ -384,12 +391,13 @@ public class ResponsavelController implements Serializable {
     private void createListLocalizacao(List<RegistroLocalizacao> list) {
         this.listRegistroLocalizao = list;
         localizacao = new ArrayList<>();
-      
+      finalizado = false;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isInicio()) {
                 inicio = list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude();
             } else if (list.get(i).isFinalizado()) {
                 fim = list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude();
+                finalizado = true;
             } else {
 
                 localizacao.add(list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude());
@@ -397,9 +405,9 @@ public class ResponsavelController implements Serializable {
         }
 
         // se for usar apenas api do maps nao precisa disso, se for usar gmap do primefaces descomentar    
-//        JsfUtil.putElementSession("localizacao", this.localizacao);
-//        JsfUtil.putElementSession("fim", fim);
-//        JsfUtil.putElementSession("inicio", inicio);
+        JsfUtil.putElementSession("localizacao", this.localizacao);
+        JsfUtil.putElementSession("fim", fim);
+        JsfUtil.putElementSession("inicio", inicio);
     }
 
   // pega o dia anterior do atual, se o dia anterior for fim de semana, ele pega sexta feira
