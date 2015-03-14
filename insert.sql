@@ -21,7 +21,7 @@
 
 LOCK TABLES `adm` WRITE;
 /*!40000 ALTER TABLE `adm` DISABLE KEYS */;
-INSERT INTO `adm` (`id`, `nome`, `email`, `senha`, `ultimoLogin`) VALUES (10,'adm','adm@adm.com','80177534a0c99a7e3645b52f2027a48b',NULL);
+INSERT INTO `adm` (`id`, `nome`, `email`, `senha`, `ultimoLogin`) VALUES (16,'adm','adm@adm.com','80177534a0c99a7e3645b52f2027a48b',NULL);
 /*!40000 ALTER TABLE `adm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -41,7 +41,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `crianca_localidade` WRITE;
 /*!40000 ALTER TABLE `crianca_localidade` DISABLE KEYS */;
-INSERT INTO `crianca_localidade` (`id`, `crianca`, `localidade`) VALUES (3,3,8),(6,3,1),(7,4,10),(8,4,11);
+INSERT INTO `crianca_localidade` (`id`, `crianca`, `localidade`) VALUES (3,3,8),(6,3,1);
 /*!40000 ALTER TABLE `crianca_localidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +89,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `localidade` WRITE;
 /*!40000 ALTER TABLE `localidade` DISABLE KEYS */;
-INSERT INTO `localidade` (`id`, `tipoLocal`, `horaChegada`, `horaSaida`, `diasUtilizacao`, `endereco`, `descricao`) VALUES (1,'Escola','null','null','null',3,'Contec'),(2,'Escola','null','null','null',4,'UP'),(8,'Casa','11:50','7:30','semana toda',7,'Casa dos Pais'),(9,'Casa','11:50','7:30','dias pares',8,'Casa dos pais'),(10,'Casa','11:50','7:30','dias pares',8,'Casa dos pais'),(11,'Escola','null','null','null',4,'UP');
+INSERT INTO `localidade` (`id`, `tipoLocal`, `horaChegada`, `horaSaida`, `diasUtilizacao`, `endereco`, `descricao`) VALUES (1,'Escola','null','null','null',3,'Contec'),(2,'Escola','null','null','null',4,'UP'),(8,'Casa','11:50','7:30','semana toda',7,'Casa dos Pais'),(9,'Casa','11:50','7:30','dias pares',8,'Casa dos pais');
 /*!40000 ALTER TABLE `localidade` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -128,7 +128,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `registrolocalizacao` WRITE;
 /*!40000 ALTER TABLE `registrolocalizacao` DISABLE KEYS */;
-INSERT INTO `registrolocalizacao` (`id`, `data`, `hora`, `itinerario`, `finalizado`, `localizacao`, `inicio`) VALUES (1,'11/03/2015','6:20',4,0,1,1),(2,'11/03/2015','6:25',4,0,2,0),(3,'11/03/2015','6:30',4,0,3,0),(4,'11/03/2015','6:35',4,0,4,0),(5,'11/03/2015','6:40',4,0,5,0),(6,'11/03/2015','6:45',4,0,6,0),(7,'11/03/2015','6:50',4,0,7,0),(8,'11/03/2015','6:55',4,0,8,0),(9,'11/03/2015','7:00',4,0,9,0),(10,'11/03/2015','7:05',4,0,10,0),(11,'11/03/2015','7:10',4,0,11,0),(12,'11/03/2015','7:15',4,0,12,0),(13,'11/03/2015','7:25',4,0,14,0),(14,'11/03/2015','7:30',4,1,16,0);
+INSERT INTO `registrolocalizacao` (`id`, `data`, `hora`, `itinerario`, `finalizado`, `localizacao`, `inicio`) VALUES (1,'14/03/2015','6:20',4,0,1,1),(2,'14/03/2015','6:25',4,0,2,0),(3,'14/03/2015','6:30',4,0,3,0),(4,'14/03/2015','6:35',4,0,4,0),(5,'14/03/2015','6:40',4,0,5,0),(6,'14/03/2015','6:45',4,0,6,0),(7,'14/03/2015','6:50',4,0,7,0),(8,'14/03/2015','6:55',4,0,8,0),(9,'14/03/2015','7:00',4,0,9,0),(10,'14/03/2015','7:05',4,0,10,0),(11,'14/03/2015','7:10',4,0,11,0),(12,'14/03/2015','7:15',4,0,12,0),(13,'14/03/2015','7:25',4,0,14,0),(14,'14/03/2015','7:30',4,1,16,0);
 /*!40000 ALTER TABLE `registrolocalizacao` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,4 +171,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-11 21:52:18
+-- Dump completed on 2015-03-14 18:19:47

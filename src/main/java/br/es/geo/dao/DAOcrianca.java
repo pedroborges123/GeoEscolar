@@ -40,7 +40,7 @@ public class DAOcrianca extends DAOGeneric implements DAO<Crianca> {
         long c = dao.insert(obj.getCasa());
         DAOcrianca_localidade dCL = new DAOcrianca_localidade();
 
-        long e = dao.insert(obj.getEscola());
+        long e = obj.getEscola().getId();
         long id = this.executeUpdate(sql);
 
         obj.setId(id);

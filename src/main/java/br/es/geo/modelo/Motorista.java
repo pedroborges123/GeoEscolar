@@ -30,6 +30,11 @@ public class Motorista extends Usuario{
     public void setCarteiraMotorista(String carteiraMotorista) {
         this.carteiraMotorista = carteiraMotorista;
     }
+
+    @Override
+    public String toString() {
+        return this.getNome()+ ", " + getTelefone()+ ", CNH: " + this.carteiraMotorista ;
+    }
     
     
     

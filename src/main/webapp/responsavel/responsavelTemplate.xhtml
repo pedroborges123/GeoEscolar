@@ -63,11 +63,11 @@
                         <p:menuitem value="Editar Informacoes" actionListener="#{respController.prepareEdit()}" icon="ui-icon-search">
                             <f:param name="i" value="1"  />
                         </p:menuitem>
-                        <p:menuitem value="Editar Informacoes Filho(s)" actionListener="#" icon="ui-icon-document">
+                        <p:menuitem value="Editar Informacoes Filho(s)" actionListener="#{respController.prepareEditCrianca()}" icon="ui-icon-document">
                             <f:param name="i" value="2"  />
                         </p:menuitem>
 
-                        <p:menuitem value="Verificar Dados Motorista" actionListener="#" icon="ui-icon-document">
+                        <p:menuitem value="Verificar Dados Motorista" actionListener="#{userController.redirectTo('responsavel/dadosMotorista.xhtml')}" icon="ui-icon-document">
                             <f:param name="i" value="3"  />
                         </p:menuitem>
 

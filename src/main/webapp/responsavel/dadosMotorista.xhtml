@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/responsavel/responsavelTemplate.xhtml">
+        <ui:define name="body"> 
+
+            <div class="conteudo" >
+
+                <h:form >
+                    <center> <h1> Dados do Motorista </h1>
+                        <p:panelGrid style="margin-top:50px; background-color: white; " rendered="#{respController.filhos}">
+
+
+                            <p:row>
+                                <p:column>
+                                    <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}" style="width: 100%;"  > 
+                                        <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
+                                        <f:selectItems value="#{respController.allCriancaOfResp}"  />
+                                    </p:selectOneMenu>
+                                </p:column>
+                                <p:column> <p:commandButton value="Show" update="@all" /> </p:column>
+                            </p:row>
+                            <p:row >
+                                <p:column  colspan="2">
+                                    <br/><br/><br/>
+                                    <p:panelGrid columns="2" style="margin-bottom:100px; width: 400px; "   id="filho">
+
+
+                                        <h:outputText value="Nome: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
+
+                                        <h:outputText value="Email: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.email}" />
+
+                                        <h:outputText value="Telefone: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.telefone}" />
+
+                                        <h:outputText value="CNH: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.carteiraMotorista}" />
+
+                                        <h:outputText value="Placa do Transporte: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.placa}" />
+
+                                        <h:outputText value="Assentos do Transporte: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.capacidade}" />
+
+                                        <h:outputText value="Registro do Transporte: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.registro}" />
+
+                                        <h:outputText value="Marca do Veiculo: " />
+                                        <h:outputText value="#{respController.currentCrianca.transporte.marca}" />
+
+
+
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                    </center>
+                </h:form>
+
+            </div>
+
+        </ui:define>
+
+
+
+    </ui:composition>
+
+
+
+
+</html>

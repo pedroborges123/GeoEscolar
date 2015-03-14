@@ -125,17 +125,6 @@ public class LocalidadeController implements Serializable {
         return pagination;
     }
 
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (Localidade) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
     public void prepareCreateByMotorista() {
         current = new Localidade();
         this.ejbFacade = new DAOlocalidade();
@@ -166,16 +155,18 @@ public class LocalidadeController implements Serializable {
         try {
             this.ejbFacade = new DAOlocalidade();
             List<Localidade> list = this.ejbFacade.findAll();
+            List<Localidade> escolas = new ArrayList<>();
+            System.out.println(list);
             
             for (int x = 0; x < list.size(); x++) {
-                if (!list.get(x).getTipoLocal().equals(TipoLocal.Escola)) {
-                    list.remove(x);
+                if (list.get(x).getTipoLocal().equals(TipoLocal.Escola)) {
+                    escolas.add(list.get(x));
+                    System.out.println(">>>>>"+x);
                 }
-
             }
-            
-            //System.out.println(list);
-            return list;
+            System.out.println(list);
+             System.out.println(escolas);
+            return escolas;
            
             
         } catch (SQLException | ClassNotFoundException ex) {
@@ -185,81 +176,6 @@ public class LocalidadeController implements Serializable {
 
     }
 
-    public String prepareEdit() {
-        current = (Localidade) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-    public String update() {
-        try {
-            getFacade().update(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("LocalUpdated"));
-            return "View";
-        } catch (ClassNotFoundException | SQLException e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
-
-    public String destroy() {
-        current = (Localidade) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
-        try {
-            getFacade().delete(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("LocalDeleted"));
-        } catch (ClassNotFoundException | SQLException e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-    }
-
-    private void updateCurrentItem() {
-        int count = 0;
-        try {
-            count = getFacade().findAll().size();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            // current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-            List<Localidade> sublist = new ArrayList<>();
-            try {
-                sublist = getFacade().findAll().subList(selectedItemIndex, selectedItemIndex + 1);
-            } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            current = sublist.get(0);
-        }
-    }
-
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
@@ -267,30 +183,10 @@ public class LocalidadeController implements Serializable {
         return items;
     }
 
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
+  
     public SelectItem[] getItemsAvailableSelectOne(List l) throws SQLException, ClassNotFoundException {
         return JsfUtil.getSelectItems(l, true);
     }
-    
     
     public SelectItem[] getItemsAvailableSelectMany() throws SQLException, ClassNotFoundException {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), false);
@@ -299,7 +195,7 @@ public class LocalidadeController implements Serializable {
     public SelectItem[] getItemsAvailableSelectOne() throws SQLException, ClassNotFoundException {
         return JsfUtil.getSelectItems(ejbFacade.findAll(), true);
     }
-
+    
     public static Localidade getLocal(long id) {
         Localidade l = new Localidade();
         try {

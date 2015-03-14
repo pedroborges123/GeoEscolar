@@ -21,7 +21,7 @@ and open the template in the editor.
                     <h:panelGrid columns="3" cellspacing="25">
 
                         <f:facet name="header" >
-                            <center><h1>Cadastrar Crianca</h1></center>
+                            <center><h1>Editar Crianca</h1></center>
                         </f:facet>
                         
                         <h:column>
@@ -29,27 +29,27 @@ and open the template in the editor.
                             <p:panelGrid columns="2">
 
                                 <h:outputLabel value="Nome:" for="nomeC" />
-                                <p:inputText id="nomeC" value="#{criancaController.selected.nome}" required="true" />
+                                <p:inputText id="nomeC" value="#{respController.currentCrianca.nome}" required="true" />
 
 
                                 <h:outputLabel value="Idade:" for="idadeC" />
-                                <p:inputText id="idadeC" value="#{criancaController.selected.idade}" required="true" />
+                                <p:inputText id="idadeC" value="#{respController.currentCrianca.idade}" required="true" />
 
                                 <h:outputLabel value="Sexo:" for="sexoC" />   
 
-                                <p:selectOneRadio id="sexoC" value="#{criancaController.selected.sexo}" required="true">
+                                <p:selectOneRadio id="sexoC" value="#{respController.currentCrianca.sexo}" required="true">
                                     <f:selectItem itemLabel="M" itemValue="M" />
                                     <f:selectItem itemLabel="F" itemValue="F" />
 
                                 </p:selectOneRadio>
 
                                 <h:outputLabel value="Email:" for="emailC" />
-                                <p:inputText id="emailC" value="#{criancaController.selected.email}"  label="Email" >
+                                <p:inputText id="emailC" value="#{respController.currentCrianca.email}"  label="Email" >
                                     <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                                 </p:inputText>
 
                                 <h:outputLabel value="Telefone:" for="telefoneC" />
-                                <p:inputMask id="telefoneC" value="#{criancaController.selected.telefone}"  mask="(999) ?999**9999" />
+                                <p:inputMask id="telefoneC" value="#{respController.currentCrianca.telefone}"  mask="(999) ?999**9999" />
 
 
                             </p:panelGrid>
@@ -59,53 +59,44 @@ and open the template in the editor.
                             <h1>Cadastrar Casa</h1>
                             <p:panelGrid columns="2">
                                 <h:outputLabel value="Descricao:" for="descricaoC" />
-                                <h:inputText id="descricaoC" value="#{criancaController.currentLocalidade.descricao}"  required="true"/>
+                                <h:inputText id="descricaoC" value="#{respController.currentCrianca.casa.descricao}"  required="true"/>
 
                                 <h:outputLabel value="Chegada:" for="horaChegadaC" />
-                                <h:inputText id="horaChegadaC" value="#{criancaController.currentLocalidade.horaChegada}"  title="Hora de Chegada na Escola" required="true"/>
+                                <h:inputText id="horaChegadaC" value="#{respController.currentCrianca.casa.horaChegada}"  title="Hora de Chegada na Escola" required="true"/>
 
                                 <h:outputLabel value="Saida:" for="horaSaidaC" />
-                                <h:inputText id="horaSaidaC" value="#{criancaController.currentLocalidade.horaSaida}" title="Hora de Saida da Escola" required="true"/>
+                                <h:inputText id="horaSaidaC" value="#{respController.currentCrianca.casa.horaSaida}" title="Hora de Saida da Escola" required="true"/>
 
                                 <h:outputLabel value="Dias Utilizacao:" for="diasUtilizacaoC" />
-                                <h:inputText id="diasUtilizacaoC" value="#{criancaController.currentLocalidade.diasUtilizacao}" required="true" />
+                                <h:inputText id="diasUtilizacaoC" value="#{respController.currentCrianca.casa.diasUtilizacao}" required="true" />
 
                                 <h:outputLabel value="CEP:" for="CEP" />
-                                <h:inputText id="CEP" value="#{criancaController.currentEndereco.CEP}"  required="true"  onblur="atualizacep(this.value)"/>
+                                <h:inputText id="CEP" value="#{respController.currentCrianca.casa.endereco.CEP}"  required="true"  onblur="atualizacep(this.value)"/>
 
                                 <h:outputLabel value="Logradouro:" for="logradouro" />
-                                <h:inputText id="logradouro" value="#{criancaController.currentEndereco.logradouro}" required="true" />
+                                <h:inputText id="logradouro" value="#{respController.currentCrianca.casa.endereco.logradouro}" required="true" />
 
                                 <h:outputLabel value="Bairro:" for="bairro" />
-                                <h:inputText id="bairro" value="#{criancaController.currentEndereco.bairro}" required="true" />
+                                <h:inputText id="bairro" value="#{respController.currentCrianca.casa.endereco.bairro}" required="true" />
 
                                 <h:outputLabel value="Cidade:" for="cidade" />
-                                <h:inputText id="cidade" value="#{criancaController.currentEndereco.cidade}" required="true" />
+                                <h:inputText id="cidade" value="#{respController.currentCrianca.casa.endereco.cidade}" required="true" />
                                 
                                 <h:outputLabel value="Estado:" for="uf" />
-                                <h:inputText id="uf" value="#{criancaController.currentEndereco.uf}" required="true" />
+                                <h:inputText id="uf" value="#{respController.currentCrianca.casa.endereco.uf}" required="true" />
 
                                 <h:outputLabel value="Numero:" for="numero" />
-                                <h:inputText id="numero" value="#{criancaController.currentEndereco.numero}"  required="true"/>
+                                <h:inputText id="numero" value="#{respController.currentCrianca.casa.endereco.numero}"  required="true"/>
 
                                 <h:outputLabel value="Complemento:" for="complemento" />
-                                <h:inputText id="complemento" value="#{criancaController.currentEndereco.complemento}" required="true" />
+                                <h:inputText id="complemento" value="#{respController.currentCrianca.casa.endereco.complemento}" required="true" />
                             </p:panelGrid>
 
                         </h:column>
                         <h:column>
-                            <h1>Cadastrar Escola</h1>
-                            <p:panelGrid columns="2" >
-                                <h:outputLabel value="Selecione uma Escola Cadastrada" />
-                                <h:outputLabel value="Nao Tem Escolas Cadastrada"  rendered="#{localidadeController.allEscolas.size() == 0}"/>
-                                <p:selectOneMenu id="escolaC" value="#{criancaController.escola}"   rendered="#{localidadeController.allEscolas.size() > 0}"  >
-                                    <f:selectItem itemLabel="---" itemValue="" />  
-                                    <f:selectItems value="#{localidadeController.allEscolas}"  var="escola"/>
-                                </p:selectOneMenu>
-                            </p:panelGrid>
-
+                           
                             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-                            <p:commandButton actionListener="#{criancaController.create}" value="Cadastrar" update="msg" ajax="false"/>
+                            <p:commandButton actionListener="#{respController.editCriancaByResponsavel()}" value="Salvar" update="msg" ajax="false"/>
 
 
                         </h:column>

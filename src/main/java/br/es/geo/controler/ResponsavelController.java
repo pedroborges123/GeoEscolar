@@ -8,11 +8,8 @@ import br.es.geo.dao.DAOresponsavel;
 import br.es.geo.dao.DAOtransporteescolar;
 import br.es.geo.controler.util.ModuloEmail;
 import br.es.geo.dao.DAOitinerario;
-import br.es.geo.dao.DAOlocalizacao;
-import br.es.geo.dao.DAOregistrolocalizacao;
 import br.es.geo.modelo.Crianca;
 import br.es.geo.modelo.Itinerario;
-import br.es.geo.modelo.Localizacao;
 import br.es.geo.modelo.Motorista;
 import br.es.geo.modelo.RegistroLocalizacao;
 import br.es.geo.modelo.TransporteEscolar;
@@ -26,9 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +54,7 @@ public class ResponsavelController implements Serializable {
     private String fim;
     private List<RegistroLocalizacao> listRegistroLocalizao;
     private DAOresponsavel ejbFacade;
+    private DAOcrianca ejbFacedeCrianca;
     private int ListTam;
     private List<Responsavel> listResp;
     private List<Responsavel> listAllresp;
@@ -86,8 +82,6 @@ public class ResponsavelController implements Serializable {
     public Boolean getFinalizado() {
         return finalizado;
     }
-
-    
     
     public String getInicio() {
         return inicio;
@@ -213,23 +207,33 @@ public class ResponsavelController implements Serializable {
         return pagination;
     }
 
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (Responsavel) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
+   public void editCriancaByResponsavel(){
+        try {
+            this.ejbFacedeCrianca.update(currentCrianca);
+            JsfUtil.addSuccessMessage("Atualizacao Concluida com Sucesso");
+            JsfUtil.redirectTo("responsavel/responsavel.xhtml");
+        } catch (ClassNotFoundException | SQLException ex) {
+            JsfUtil.addErrorMessage(ex, "Falha no cadastro");
+            Logger.getLogger(ResponsavelController.class.getName()).log(Level.SEVERE, null, ex);
+            prepareEditCrianca();
+        }
+   }
+    
+    
     public void prepareCreate() {
         this.ejbFacade = new DAOresponsavel();
         current = new Responsavel();
         selectedItemIndex = -1;
         JsfUtil.redirectTo("responsavel/Create.xhtml");
     }
+
+    
+    public void prepareEditCrianca(){
+        this.ejbFacedeCrianca = new DAOcrianca();
+        JsfUtil.redirectTo("responsavel/editarFilho.xhtml");
+        
+    }
+    
 
     public void prepareCreateByMotorista() {
         this.ejbFacade = new DAOresponsavel();
@@ -288,6 +292,7 @@ public class ResponsavelController implements Serializable {
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ResponsavelController.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
     }
 
     private Responsavel getResponsavelByCodigo() {
@@ -349,11 +354,9 @@ public class ResponsavelController implements Serializable {
     }
 
     //pegando a localizacoes da crianca 
-
     public void getLogalizacaoCrianca() throws ClassNotFoundException, SQLException {
         Itinerario iti = getItinerarioByCrianca();
 
-       
         List<RegistroLocalizacao> listRL = iti.getRegistroLocalizacaoList();
         List<RegistroLocalizacao> listRL1 = listRL;
         System.out.println(listRL);
@@ -369,8 +372,7 @@ public class ResponsavelController implements Serializable {
                 listRL.remove(i);
             }
         }
-
-        
+  
         if (listRL.isEmpty()) {
             String diaAnterior = getDiaAnterior();
             for (int i = 0; i < listRL1.size(); i++) {
@@ -387,7 +389,6 @@ public class ResponsavelController implements Serializable {
     }
 
     // transformando a lista de localizacao em String lat,long
-
     private void createListLocalizacao(List<RegistroLocalizacao> list) {
         this.listRegistroLocalizao = list;
         localizacao = new ArrayList<>();
@@ -510,64 +511,6 @@ public class ResponsavelController implements Serializable {
         }
     }
 
-    public String destroy() {
-        current = (Responsavel) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
-        try {
-            getFacade().delete(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ResponsavelDeleted"));
-        } catch (ClassNotFoundException | SQLException e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-    }
-
-    private void updateCurrentItem() {
-        int count = 0;
-        try {
-            count = getFacade().findAll().size();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            // current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-            List<Responsavel> sublist = new ArrayList<>();
-            try {
-                sublist = getFacade().findAll().subList(selectedItemIndex, selectedItemIndex + 1);
-            } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            current = sublist.get(0);
-        }
-    }
-
     public DataModel getItems() {
         if (items == null) {
             items = getPagination().createPageDataModel();
@@ -575,26 +518,7 @@ public class ResponsavelController implements Serializable {
         return items;
     }
 
-    private void recreateModel() {
-        items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
-    }
-
+   
     public List<Crianca> getCriancas() {
         DAOcrianca dc = new DAOcrianca();
         DAOtransporteescolar dte = new DAOtransporteescolar();
@@ -623,7 +547,6 @@ public class ResponsavelController implements Serializable {
     public void showTooltip() {
 
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Dica", "Antes de Cadastrar Responsavel, verifique se o mesmo já está cadastrado!");
-
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 

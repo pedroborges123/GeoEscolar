@@ -83,23 +83,6 @@ public class ItinerarioController implements Serializable {
         return pagination;
     }
 
-    public String prepareList() {
-        recreateModel();
-        return "List";
-    }
-
-    public String prepareView() {
-        current = (Itinerario) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
-    }
-
-    public String prepareCreate() {
-        current = new Itinerario();
-        selectedItemIndex = -1;
-        return "Create";
-    }
-
     public void create() {
         try {
             Motorista m = (Motorista) JsfUtil.getElementSession("usuario");
@@ -112,81 +95,6 @@ public class ItinerarioController implements Serializable {
         } catch (SQLException | ClassNotFoundException e) {
             JsfUtil.addErrorMessage(e, "Falha no cadastro");
             this.prepareItinerarioByMotorista();
-        }
-    }
-
-    public String prepareEdit() {
-        current = (Itinerario) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit";
-    }
-
-    public String update() {
-        try {
-            getFacade().update(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ItinerarioUpdated"));
-            return "View";
-        } catch (ClassNotFoundException | SQLException e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-            return null;
-        }
-    }
-
-    public String destroy() {
-        current = (Itinerario) getItems().getRowData();
-        selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        performDestroy();
-        recreatePagination();
-        recreateModel();
-        return "List";
-    }
-
-    public String destroyAndView() {
-        performDestroy();
-        recreateModel();
-        updateCurrentItem();
-        if (selectedItemIndex >= 0) {
-            return "View";
-        } else {
-            // all items were removed - go back to list
-            recreateModel();
-            return "List";
-        }
-    }
-
-    private void performDestroy() {
-        try {
-            getFacade().delete(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ItinerarioDeleted"));
-        } catch (ClassNotFoundException | SQLException e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
-        }
-    }
-
-    private void updateCurrentItem() {
-        int count = 0;
-        try {
-            count = getFacade().findAll().size();
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (selectedItemIndex >= count) {
-            // selected index cannot be bigger than number of items:
-            selectedItemIndex = count - 1;
-            // go to previous page if last page disappeared:
-            if (pagination.getPageFirstItem() >= count) {
-                pagination.previousPage();
-            }
-        }
-        if (selectedItemIndex >= 0) {
-            // current = getFacade().findRange(new int[]{selectedItemIndex, selectedItemIndex + 1}).get(0);
-            List<Itinerario> sublist = new ArrayList<>();
-            try {
-                sublist = getFacade().findAll().subList(selectedItemIndex, selectedItemIndex + 1);
-            } catch (SQLException | ClassNotFoundException ex) {
-                Logger.getLogger(AdmController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            current = sublist.get(0);
         }
     }
 
@@ -256,22 +164,6 @@ public class ItinerarioController implements Serializable {
 
     private void recreateModel() {
         items = null;
-    }
-
-    private void recreatePagination() {
-        pagination = null;
-    }
-
-    public String next() {
-        getPagination().nextPage();
-        recreateModel();
-        return "List";
-    }
-
-    public String previous() {
-        getPagination().previousPage();
-        recreateModel();
-        return "List";
     }
 
     public SelectItem[] getItemsAvailableSelectMany() throws SQLException, ClassNotFoundException {

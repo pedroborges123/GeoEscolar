@@ -134,8 +134,7 @@ public class UserController implements Serializable {
             if (responsavel.getSenha().equals(senha)) {
 
                 JsfUtil.addSuccessMessage(msgS);
-                
-                
+
                 responsavel.setCriancas((ArrayList<Crianca>) list);
                 dr.update(responsavel);
                 dr.delete(r);
@@ -143,7 +142,6 @@ public class UserController implements Serializable {
                 JsfUtil.removeElementSession("criancas");
                 JsfUtil.putElementSession(usr, responsavel);
                 JsfUtil.putElementSession(usrTipo, Responsavel.class);
-                
 
                 JsfUtil.redirectTo("responsavel/responsavel.xhtml");
             }
@@ -243,7 +241,6 @@ public class UserController implements Serializable {
             JsfUtil.redirectTo("index.xhtml");
         }
     }
-
 
     public void prepareAdm() {
 
@@ -355,20 +352,17 @@ public class UserController implements Serializable {
         JsfUtil.redirectTo("cadastro.xhtml");
     }
 
-    public
-            boolean admLogado() {
+    public boolean admLogado() {
 
         return JsfUtil.getElementSession(usrTipo) == Adm.class;
     }
 
-    public
-            boolean responsavelLogado() {
+    public boolean responsavelLogado() {
 
         return JsfUtil.getElementSession(usrTipo) == Responsavel.class;
     }
 
-    public
-            boolean motoristaLogado() {
+    public boolean motoristaLogado() {
 
         return JsfUtil.getElementSession(usrTipo) == Motorista.class;
     }

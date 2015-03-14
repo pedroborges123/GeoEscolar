@@ -12,23 +12,26 @@
         </ui:define>
         <ui:define name="body">
 
-           
+
             <h:form>
                 <p:growl autoUpdate="true" id="msg" showDetail="true" />
-                <p:panelGrid columns="2">
+                <center>
+                    <h1>Editar Informacoes </h1>
 
-                    <h:outputLabel value="Nome: *" for="nomeM" />
-                    <p:inputText id="nomeM" value="#{respController.selected.nome}" title="Nome" required="true"/>
+                    <p:panelGrid columns="2">
 
-                    <h:outputLabel value="Email: *" for="emailM" />
-                    <p:inputText id="emailM" value="#{respController.selected.email}" required="true" label="Email" >
-                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
-                    </p:inputText>
+                        <h:outputLabel value="Nome: *" for="nomeM" />
+                        <p:inputText id="nomeM" value="#{respController.selected.nome}" title="Nome" required="true"/>
 
-                    <h:outputLabel value="Telefone: *" for="telefoneM" />
-                    <p:inputMask id="telefoneM" value="#{respController.selected.telefone}" title="Telefone" mask="(999) ?999**9999" required="true" />
+                        <h:outputLabel value="Email: *" for="emailM" />
+                        <p:inputText id="emailM" value="#{respController.selected.email}" required="true" label="Email" >
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
 
-                     <h:outputLabel value="Tipo: " for="tipoResR"  />
+                        <h:outputLabel value="Telefone: *" for="telefoneM" />
+                        <p:inputMask id="telefoneM" value="#{respController.selected.telefone}" title="Telefone" mask="(999) ?999**9999" required="true" />
+
+                        <h:outputLabel value="Tipo: " for="tipoResR"  />
                         <p:selectOneMenu id="tipoResR" value="#{respController.selected.tipoRes}" style="width:125px"  >
                             <f:selectItem itemLabel="----" itemValue="" />
                             <f:selectItem itemLabel="Pai" itemValue="#{respController.tipoPai}" />
@@ -38,10 +41,11 @@
                             <f:selectItem itemLabel="Tutor" itemValue="#{respController.tipoTutor}" />
                             <f:selectItem itemLabel="Padastros" itemValue="#{respController.tipoPadastros}" />
                         </p:selectOneMenu>
-                
-                </p:panelGrid>
-                <p:commandLink action="#{respController.update}" value="Salvar" update="msg"/>
 
+                    </p:panelGrid>
+                    <br/><br/>
+                    <p:commandButton action="#{respController.update}" value="Salvar" update="msg"/>
+                </center>
             </h:form>
         </ui:define>
     </ui:composition>
