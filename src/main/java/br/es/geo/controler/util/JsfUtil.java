@@ -56,6 +56,14 @@ public class JsfUtil {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
     }
 
+    
+     public static void addWarningMessage(String msg) {
+        System.out.println("Sucesso: " + msg);
+        FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Atencao", msg);
+        FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+    }
+    
     public static Object getElementSession(String key) {
         return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(key);
     }

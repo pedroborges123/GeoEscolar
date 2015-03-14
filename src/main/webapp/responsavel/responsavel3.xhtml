@@ -24,7 +24,7 @@ and open the template in the editor.
             <f:event listener="#{respController.inializa()}"  type="preRenderComponent" />
             <h:form >
                 <p:growl autoUpdate="true" id="msg"  />
-                <div  >
+                <div class="parteEsquerda" >
 
 
                     <p:panelGrid columns="2" style="margin-bottom:10px"  id="filho">
@@ -58,21 +58,23 @@ and open the template in the editor.
                     </p:panelGrid>
 
 
-                    <p:outputLabel value="Inicio: #{respController.localizacao.get(0)}" id="start"  />
-                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item"  >
+                    <p:outputLabel value="Inicio: #{respController.localizacao.get(0)}" id="start"  rendered="false" />
+                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item" rendered="false" >
                         #{item.toString()}
                     </p:dataList>
 
-                    <p:outputLabel value=" Final: #{respController.localizacao.get(respController.listTam-2)}" id="end"  />
+                    <p:outputLabel value=" Final: #{respController.localizacao.get(respController.listTam-2)}" id="end" rendered="false" />
 
                 </div>
 
-                <div   >
 
-                    <p:gmap center="-20.817584,-41.605848" zoom="8" type="hybrid" style="width:200px;height:500px; border: 4px black;" model="#{maps.advancedModel}" />
-
-                </div>
             </h:form>
+
+            <div class="parteDireita" >
+
+                <p:gmap center="-20.817584,-41.605848" zoom="6" type="hybrid" style="width:600px;height:400px"  model="#{maps.advancedModel}" />
+
+            </div>
         </ui:define>
 
 

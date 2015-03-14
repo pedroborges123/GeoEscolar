@@ -108,6 +108,28 @@ public class DAOlocalizacao  extends DAOGeneric implements DAO<Localizacao> {
         return localizacao;
     }
 
+     
+    public List<Localizacao> findAllByRegistroLocalizacaoAndData(long itinerario, String data ) throws SQLException, ClassNotFoundException {
+        // TODO Auto-generated method stub
+        this.openConnection();
+
+        String sql = "SELECT localizacao.id, localizacao.latitude, localizacao.longitude "
+                + "FROM  itinerario join registrolocalizacao join localizacao" 
+                + "where localizacao.id = registrolocalizacao.localizacao " 
+                + " and itinerario.id ="+ itinerario  
+                + " and registrolocalizacao.data= '" + data +"'";  
+
+        ResultSet rs = this.executeQuery(sql);
+
+        List<Localizacao> localizacao = retriveLocalizacaos(rs);
+
+        this.closeConnection();
+
+        return localizacao;
+    }
+    
+    
+    
     private List<Localizacao> retriveLocalizacaos(ResultSet rs) throws SQLException, ClassNotFoundException {
         List<Localizacao> localizacaos = new ArrayList<>();
 

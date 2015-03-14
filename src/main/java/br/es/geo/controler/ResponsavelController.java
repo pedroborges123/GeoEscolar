@@ -8,6 +8,7 @@ import br.es.geo.dao.DAOresponsavel;
 import br.es.geo.dao.DAOtransporteescolar;
 import br.es.geo.controler.util.ModuloEmail;
 import br.es.geo.dao.DAOitinerario;
+import br.es.geo.dao.DAOlocalizacao;
 import br.es.geo.dao.DAOregistrolocalizacao;
 import br.es.geo.modelo.Crianca;
 import br.es.geo.modelo.Itinerario;
@@ -25,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
@@ -63,6 +65,7 @@ public class ResponsavelController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     private String codigo;
+    private Boolean filhos;
 
     public ResponsavelController() {
     }
@@ -77,6 +80,18 @@ public class ResponsavelController implements Serializable {
 
     public void setLocalizacao(List<String> localizacao) {
         this.localizacao = localizacao;
+    }
+
+    public String getInicio() {
+        return inicio;
+    }
+
+    public String getFim() {
+        return fim;
+    }
+
+    public Boolean getFilhos() {
+        return filhos;
     }
 
     public Responsavel getCurrent() {
@@ -107,8 +122,6 @@ public class ResponsavelController implements Serializable {
         this.ListTam = ListTam;
     }
 
-    
-    
     public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
@@ -252,10 +265,22 @@ public class ResponsavelController implements Serializable {
 
     }
 
-    public void inializa() throws ClassNotFoundException, SQLException {
-        this.current = (Responsavel) JsfUtil.getElementSession("usuario");
-        this.currentCrianca = current.getCriancas().get(0);
-        getLogalizacaoCrianca();
+    public void inializa() {
+        filhos = false;
+        try {
+            this.current = (Responsavel) JsfUtil.getElementSession("usuario");
+            if (current.getCriancas() != null || current.getCriancas().size() > 0) {
+                this.currentCrianca = current.getCriancas().get(0);
+                filhos = true;
+                getLogalizacaoCrianca();
+
+            }else{
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Cuidado", "O senhor(a) precisa ter filhos para poder visualizar as rota.");
+            RequestContext.getCurrentInstance().showMessageInDialog(message);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(ResponsavelController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private Responsavel getResponsavelByCodigo() {
@@ -293,36 +318,52 @@ public class ResponsavelController implements Serializable {
     }
 
     public List<Crianca> getAllCriancaOfResp() {
+        System.out.println("Filhos: " + this.current.getCriancas());
         return this.current.getCriancas();
 
     }
 
-    public void getLogalizacaoCrianca() throws ClassNotFoundException, SQLException {
+    //pegando o itinerario do turno da crianca
+    private Itinerario getItinerarioByCrianca() throws SQLException, ClassNotFoundException {
+        Itinerario iti = null;
         long tid = this.currentCrianca.getTransporte().getId();
         DAOitinerario daoit = new DAOitinerario();
         List<Itinerario> list = daoit.findbyTransporteID(tid);
         String hora = currentCrianca.getCasa().getHoraSaida();
         Turno t = Turno.getCurrentTurno(hora);
-        Itinerario iti = null;
-        //pegando o itinerario do turno da crianca
+
         for (Itinerario list1 : list) {
             if (list1.getTurno().equals(t)) {
+
                 iti = list1;
             }
         }
+        return iti;
+    }
 
-        DAOregistrolocalizacao daorl = new DAOregistrolocalizacao();
-        List<RegistroLocalizacao> listRL = daorl.findByItinerarioid(iti.getId());
+    //pegando a localizacoes da crianca 
+
+    public void getLogalizacaoCrianca() throws ClassNotFoundException, SQLException {
+        Itinerario iti = getItinerarioByCrianca();
+
+       
+        List<RegistroLocalizacao> listRL = iti.getRegistroLocalizacaoList();
         List<RegistroLocalizacao> listRL1 = listRL;
+        System.out.println(listRL);
+        System.out.println(listRL.size());
+        // pegando o dia atual
         Date data = Calendar.getInstance().getTime();
         String d = new SimpleDateFormat("dd/MM/yyyy").format(data);
-
+        
         for (int i = 0; i < listRL.size(); i++) {
+            
             if (!listRL.get(i).getDia().equals(d)) {
+                System.out.println("entrou aqui");
                 listRL.remove(i);
             }
         }
 
+        
         if (listRL.isEmpty()) {
             String diaAnterior = getDiaAnterior();
             for (int i = 0; i < listRL1.size(); i++) {
@@ -330,51 +371,50 @@ public class ResponsavelController implements Serializable {
                     listRL.remove(i);
                 }
             }
+            JsfUtil.addWarningMessage("Essa Localizacao nao e' do dia Atual");
             createListLocalizacao(listRL1);
         }
+
         createListLocalizacao(listRL);
+
     }
+
+    // transformando a lista de localizacao em String lat,long
 
     private void createListLocalizacao(List<RegistroLocalizacao> list) {
         this.listRegistroLocalizao = list;
         localizacao = new ArrayList<>();
-        String inicio = null;
-        String finaliza = null;
+      
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).isInicio()) {
                 inicio = list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude();
             } else if (list.get(i).isFinalizado()) {
-                finaliza = list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude();
+                fim = list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude();
             } else {
 
                 localizacao.add(list.get(i).getLocalizacao().getLatitude() + "," + list.get(i).getLocalizacao().getLongitude());
             }
         }
-        localizacao.add(0, inicio);
-        localizacao.add(finaliza);
-        this.ListTam = localizacao.size();
-        JsfUtil.putElementSession("localizacao", this.localizacao);
 
+        // se for usar apenas api do maps nao precisa disso, se for usar gmap do primefaces descomentar    
+//        JsfUtil.putElementSession("localizacao", this.localizacao);
+//        JsfUtil.putElementSession("fim", fim);
+//        JsfUtil.putElementSession("inicio", inicio);
     }
 
-//    //add 1 dia e pega o proximo dia util
-//    public static Date proximoDiaUtil(Date data) {
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTime(data);
-//        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-//            calendar.add(Calendar.DATE, 1); //Soma 1 dia pra cair na segunda feira  
-//        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-//            calendar.add(Calendar.DATE, 2); //Soma 2 dias pra cair na segunda feira  
-//        }
-//
-//        return calendar.getTime();
-//    }
+  // pega o dia anterior do atual, se o dia anterior for fim de semana, ele pega sexta feira
     private String getDiaAnterior() {
 
-        // modificar para pegar apenas dias da semana..
+        
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
+
         cal.add(Calendar.DATE, -1);
+        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            cal.add(Calendar.DATE, -2);
+        } else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            cal.add(Calendar.DATE, -1);
+        }
         return dateFormat.format(cal.getTime());
     }
 

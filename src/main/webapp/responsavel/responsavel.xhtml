@@ -37,7 +37,7 @@ and open the template in the editor.
                 }
             </style>
 
-            <script type="text/javascript" src="https%3A%2F%2Fmaps.googleapis.com%2Fmaps%2Fapi%2Fjs%3Fv%3D3.exp%26signed_in%3Dtrue"></script>
+
 
             <script type="text/javascript">
                 var directionsDisplay;
@@ -51,10 +51,7 @@ and open the template in the editor.
                 function initialize() {
                     directionsDisplay = new google.maps.DirectionsRenderer();
                     var c = new google.maps.LatLng(lat, lon);
-                    var mapOptions = {
-                        zoom: 8,
-                        center: c
-                    }
+
                     gmap = new PF('maps').getMap();
                     directionsDisplay.setMap(gmap);
                 }
@@ -63,6 +60,7 @@ and open the template in the editor.
                     var start = document.getElementById('start').value;
                     var end = document.getElementById('end').value;
                     var waypts = [];
+                    alert(start);
                     var checkboxArray = document.getElementById('points');
                     //<![CDATA[ 
                     for (var i = 0; i < checkboxArray.length; i++) {
@@ -76,7 +74,7 @@ and open the template in the editor.
                     var request = {
                         origin: start,
                         destination: end,
-                        waypoints: waypts,
+                        //waypoints: waypts,
                         optimizeWaypoints: true,
                         travelMode: google.maps.TravelMode.DRIVING
                     };
@@ -95,58 +93,100 @@ and open the template in the editor.
 
             </script>
 
-            
-           
-            <f:event listener="#{respController.inializa()}"  type="preRenderComponent" />
+
+
+            <f:event listener="#{respController.inializa()}"   type="preRenderComponent" />
             <h:form >
                 <p:growl autoUpdate="true" id="msg"  />
                 <div class="parteEsquerda" >
 
 
-                    <p:panelGrid columns="2" style="margin-bottom:10px"  id="filho">
+                    <p:panelGrid style="margin-top:20px; background-color: white; " rendered="#{respController.filhos}">
 
                         <f:facet name="header" >
+                            <p:row>
+                                <p:column colspan="2" >
+                                    <p:outputLabel value="Dados da Crianca" />
+                                </p:column> 
 
-                            <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}"  >
-                                <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
-                                <f:selectItems value="#{respController.allCriancaOfResp}"  />
-                            </p:selectOneMenu>
-                            <p:commandButton value="Show" update="@all" />
+                            </p:row>
 
-                        </f:facet>                         
 
-                        <h:outputText value="Nome: " />
-                        <h:outputText value="#{respController.currentCrianca.nome}" />
+                        </f:facet>      
 
-                        <h:outputText value="Idade: " />
-                        <h:outputText value="#{respController.currentCrianca.idade}" />
+                        <f:facet name="footer" >
+                            <p:row>
+                                <p:column colspan="2" >
+                                    <p:outputLabel value="Dados da Crianca" />
+                                </p:column> 
 
-                        <h:outputText value="Motorista: " />
-                        <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
+                            </p:row>
 
-                        <h:outputText value="Escola: " />
-                        <h:outputText value="#{respController.currentCrianca.escola.descricao}" />
+                        </f:facet>      
 
-                        <f:facet name="footer">
-                            <p:commandButton value="Localizar" onclick="calcRoute();" />
-                        </f:facet> 
+                        <p:row>
+                            <p:column>
+                                <p:selectOneMenu id="crianca" value="#{respController.currentCrianca}"  > 
+                                    <f:selectItem itemLabel="Selecione um Filho" itemValue="" />
+                                    <f:selectItems value="#{respController.allCriancaOfResp}"  />
+                                </p:selectOneMenu>
+                            </p:column>
+                            <p:column> <p:commandButton value="Show" update="@all" /> </p:column>
+                        </p:row>
+                        <p:row >
+                            <p:column  colspan="2">
+                                <p:panelGrid columns="2" style="margin-bottom:10px; width: 100px; "   id="filho">
 
+                                    <f:facet name="header"  >
+                                        <p:outputLabel value="  "  style=" height: 30px;" />
+                                    </f:facet>
+
+                                    <h:outputText value="Nome: " />
+                                    <h:outputText value="#{respController.currentCrianca.nome}" />
+
+                                    <h:outputText value="Idade: " />
+                                    <h:outputText value="#{respController.currentCrianca.idade}" />
+
+                                    <h:outputText value="Motorista: " />
+                                    <h:outputText value="#{respController.currentCrianca.transporte.motorista.nome}" />
+
+                                    <h:outputText value="Escola: " />
+                                    <h:outputText value="#{respController.currentCrianca.escola.descricao}" />
+
+                                   
+                                      
+                                  
+
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
                     </p:panelGrid>
-
 
                 </div>
 
                 <div  class="parteDireita" >
-                    <div id="map-canvas" style="float:right;width:200px;height:200px;"></div>
+
+                    <center> <h1> Localizacao </h1> </center>
                     
-                    <p:gmap center="-25.348761, -41.494654" type="hybrid" widgetVar="maps" zoom="8" style="float:right;width:200px;height:500px;" />
+                    
+                    <div>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true"  />
+                        <p:gmap id="mapa" center="-25.348761, -41.494654" type="hybrid" widgetVar="maps" zoom="6" style="float:top;width:100%;height:500px; border: #000 3px ; " />
+                        <p:commandButton value="Localizar" update="mapa" type="submit" onclick="calcRoute();" />
+                    </div>
+
+
+                    <br/><br/><br/><br/><br/><br/>
                    
-                    <p:outputLabel value="Inicio: #{respController.localizacao.get(0)}" id="start"  />
-                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item"  rendered="false" >
-                    #{item.toString()}
-                    </p:dataList>
+                     
                     
-                    <p:outputLabel value=" Final: #{respController.localizacao.get(respController.listTam - 2)}" id="end"  />
+                    <p:outputLabel value="#{respController.inicio}" id="start"  />
+                    <p:dataList id="points"  value="#{respController.localizacao}"  var="item"   >
+                        #{item.toString()}
+                    </p:dataList>
+                    <p:outputLabel value="#{respController.localizacao.size()}"   /> <br/>
+
+                    <p:outputLabel value="#{respController.fim}" id="end"  />
                 </div>
             </h:form>
         </ui:define>
