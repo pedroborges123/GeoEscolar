@@ -13,7 +13,7 @@ and open the template in the editor.
 
     <ui:composition template="/responsavel/responsavelTemplate.xhtml">
 
-        <ui:define name="body" > 
+        <ui:define name="body" rendered="#{userController.responsavelLogado()}" > 
 
             <f:event listener="#{respController.inializa()}"  type="preRenderComponent" />
             <h:form >
@@ -96,6 +96,8 @@ and open the template in the editor.
             var gmap;
 
             function initialize() {
+                
+                $.get("/coordenadas.json");
                 directionsDisplay = new google.maps.DirectionsRenderer();
                 gmap = new PF('maps').getMap();
                 directionsDisplay.setMap(gmap);
